@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"> <!-- демо-копия: убрать при запуске на siamotors.ru -->
+<title>Sia Motors — автомобили из Китая под ключ</title>
+<meta name="description" content="Подбираем, проверяем и привозим автомобили из Китая, Кореи и Японии под ключ. Доставка во Владивосток и Москву, растаможка — на нас.">
+<meta name="theme-color" content="#1c1b19">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/Furore.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="common.css">
+<style>
+  /* Вариант 4 — «Стандарт ниши»: привычная структура сайтов привоза авто, сделанная аккуратно. */
+  .h2 { font: 400 clamp(1.6rem, 3vw, 2.5rem)/1.12 var(--display); letter-spacing: 0.07em; text-transform: uppercase; }
+  .sec { padding-block: clamp(64px, 8vw, 112px); }
+  .sec__head { display: grid; gap: 12px; max-width: 62ch; margin-bottom: clamp(26px, 3.4vw, 44px); }
+  .sec__lede { opacity: 0.8; }
+  .light { background: var(--cream); color: var(--graphite); }
+  .light a { color: var(--graphite); }
+  .light :focus-visible { outline-color: var(--bronze-deep); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 12px 24px;
+    border-radius: 10px; font-weight: 700; text-decoration: none; border: 1.5px solid transparent; transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn--main { background: var(--bronze); color: var(--on-bronze); }
+  .btn--main:hover { background: #c1955a; }
+  .btn--ghost { border-color: rgba(245, 241, 236, 0.45); color: var(--cream); }
+  .btn--ghost:hover { border-color: var(--cream); background: rgba(245, 241, 236, 0.08); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .top { position: sticky; top: 0; z-index: 20; background: rgba(28, 27, 25, 0.96); border-bottom: 1px solid var(--line); }
+  .top__in { display: flex; align-items: center; gap: 28px; min-height: 66px; }
+  .top__logo img { height: 24px; width: auto; }
+  .top__nav { display: flex; gap: 22px; margin-left: auto; font-size: 15px; }
+  .top__nav a { color: var(--cream-dim); text-decoration: none; }
+  .top__nav a:hover { color: var(--cream); }
+  .top__phone { font-weight: 700; text-decoration: none; }
+  .top .btn { min-height: 42px; padding: 8px 16px; font-size: 15px; }
+  @media (max-width: 999px) { .top__nav, .top__phone { display: none; } .top .btn { margin-left: auto; } }
+
+  /* Первый экран: фото, заголовок, форма */
+  .hero { position: relative; isolation: isolate; padding: clamp(40px, 6vw, 88px) 0 clamp(40px, 5vw, 64px); }
+  .hero__bg { position: absolute; inset: 0; z-index: -1; }
+  .hero__bg { overflow: hidden; }
+  .hero__bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(6px) saturate(0.85); transform: scale(1.06); }
+  .hero__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(28, 27, 25, 0.96) 0%, rgba(28, 27, 25, 0.86) 45%, rgba(28, 27, 25, 0.55) 100%); }
+  .hero__grid { display: grid; gap: 32px; align-items: center; }
+  .h1 { font: 400 clamp(2.1rem, 4.8vw, 4.1rem)/1.05 var(--display); letter-spacing: 0.05em; text-transform: uppercase; }
+  .hero__lede { margin: 18px 0 22px; max-width: 46ch; font-size: clamp(16px, 1.35vw, 19px); }
+  .ticks { display: grid; gap: 10px; margin-bottom: 28px; }
+  .ticks li { display: flex; gap: 10px; align-items: flex-start; }
+  .ticks .ico { color: var(--bronze-text); margin-top: 3px; }
+  .hero__form { padding: clamp(22px, 2.6vw, 32px); border-radius: 14px; background: var(--cream); color: var(--graphite); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
+  .hero__form h2 { font: 400 20px/1.2 var(--display); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .hero__form > p { font-size: 15px; color: var(--graphite-dim); margin-bottom: 18px; }
+  .hero__form a { color: var(--graphite); }
+  .hero__form .field input { border-color: rgba(45, 44, 42, 0.45); background: var(--cream-light); }
+  .hero__form .field__err { color: var(--error-deep); }
+  .hero__form .lead { gap: 14px; }
+  .hero__form .lead__status { padding: 12px 14px; border-radius: 8px; background: var(--cream-deep); }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px 28px; margin-top: clamp(32px, 4vw, 52px); padding-top: 22px; border-top: 1px solid var(--line); }
+  .facts b { display: block; font: 400 24px/1.1 var(--display); letter-spacing: 0.04em; }
+  .facts span { font-size: 14px; color: var(--cream-dim); }
+  @media (min-width: 1000px) { .hero__grid { grid-template-columns: 7fr 5fr; gap: 56px; } }
+
+  /* Преимущества */
+  .adv { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+  .adv li { display: grid; gap: 10px; align-content: start; }
+  .adv .ico { width: 34px; height: 34px; color: var(--bronze-deep); stroke-width: 1.5; }
+  .adv h3 { font: 400 16px/1.25 var(--display); letter-spacing: 0.07em; text-transform: uppercase; }
+  .adv p { font-size: 15px; color: var(--graphite-dim); }
+
+  /* Предложения */
+  .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); margin-top: clamp(48px, 6vw, 80px); }
+  .car { display: grid; grid-template-rows: auto 1fr; border-radius: 14px; overflow: hidden; background: var(--cream-light); box-shadow: 0 1px 0 rgba(45, 44, 42, 0.08), 0 12px 28px -20px rgba(45, 44, 42, 0.5); transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
+  .car:hover { transform: translateY(-4px); box-shadow: 0 1px 0 rgba(45, 44, 42, 0.08), 0 24px 40px -24px rgba(45, 44, 42, 0.6); }
+  .car img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .car__body { display: grid; align-content: start; gap: 6px; padding: 16px 18px 18px; }
+  .car h3 { font: 400 16px/1.25 var(--display); letter-spacing: 0.06em; text-transform: uppercase; }
+  .car__meta { font-size: 14px; color: var(--graphite-faint); }
+  .car__price { font: 400 21px/1.2 var(--display); letter-spacing: 0.03em; color: var(--bronze-deep); margin-top: 4px; }
+  .car__under { font-size: 13px; color: var(--graphite-faint); }
+  .car__links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px; font-size: 14px; }
+  .car__links a:first-child { font-weight: 700; }
+  .cards-more { margin-top: 26px; }
+  @media (max-width: 699px) {
+    .cards { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 16px; scroll-padding-inline: var(--gutter); }
+    .car { flex: 0 0 80%; scroll-snap-align: start; }
+  }
+  .offers-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 40px; margin-top: clamp(64px, 8vw, 104px); }
+  .offers-head + .cards { margin-top: 30px; }
+
+  /* Маршруты */
+  .routes { display: grid; gap: 20px; }
+  .route { padding: clamp(22px, 3vw, 34px); border-radius: 14px; background: #262523; }
+  .route h3 { font: 400 18px/1.2 var(--display); letter-spacing: 0.08em; text-transform: uppercase; }
+  .route__path { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 16px 0; font-weight: 600; }
+  .route__path .ico { width: 18px; height: 18px; color: var(--bronze-text); }
+  .route__time { font: 400 clamp(2.2rem, 4vw, 3rem)/1 var(--display); letter-spacing: 0.04em; margin-bottom: 12px; }
+  .route p { color: var(--cream-dim); }
+  .routes__note { margin-top: 18px; font-size: 15px; color: var(--cream-dim); }
+  @media (min-width: 900px) { .routes { grid-template-columns: 1fr 1fr; } }
+
+  /* Этапы */
+  .steps { display: grid; gap: 26px 28px; }
+  @media (min-width: 700px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+  .steps li { display: grid; grid-template-columns: 48px 1fr; gap: 14px; }
+  .steps .n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--graphite); font: 400 15px var(--display); }
+  .steps li:first-child .n { background: var(--graphite); color: var(--cream); }
+  .steps h3 { font: 400 16px/1.25 var(--display); letter-spacing: 0.06em; text-transform: uppercase; margin: 10px 0 6px; }
+  .steps p { font-size: 15px; color: var(--graphite-dim); }
+
+  /* Отзывы */
+  .reviews { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 900px) { .reviews { grid-template-columns: repeat(4, 1fr); } }
+  .rv { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #262523; }
+  .rv img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .rv:hover img { transform: scale(1.04); }
+  .rv__play { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; display: grid; place-items: center; background: rgba(28, 27, 25, 0.75); color: var(--cream); transition: background-color 0.2s, color 0.2s; }
+  .rv:hover .rv__play { background: var(--bronze); color: var(--on-bronze); }
+  .ico--fill { fill: currentColor; stroke: none; }
+
+  /* Запчасти */
+  .parts { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 28px; padding: 26px 28px; border-radius: 14px; background: var(--cream-light); box-shadow: 0 12px 28px -20px rgba(45, 44, 42, 0.5); }
+  .parts h2 { font: 400 18px var(--display); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .parts p { color: var(--graphite-dim); max-width: 58ch; }
+  .btn--dark { background: var(--graphite); color: var(--cream) !important; }
+  .btn--dark:hover { background: #3a3936; }
+
+  /* Вопросы */
+  .faq { max-width: 860px; }
+  .qa { border-bottom: 1px solid rgba(45, 44, 42, 0.16); }
+  .qa:first-child { border-top: 1px solid rgba(45, 44, 42, 0.16); }
+  .qa summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; font-weight: 700; cursor: pointer; list-style: none; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .ico { transition: transform 0.35s var(--ease); }
+  .qa[open] summary .ico { transform: rotate(45deg); color: var(--bronze-deep); }
+  .qa p { padding: 0 0 20px; color: var(--graphite-dim); max-width: 70ch; }
+
+  .final { text-align: center; }
+  .final .sec__head { margin-inline: auto; justify-items: center; }
+  .final .cta { justify-content: center; }
+  .final__phone { margin-top: 18px; color: var(--cream-dim); }
+  .final__phone a { color: var(--cream); }
+
+  .foot { border-top: 1px solid var(--line); padding: 44px 0 28px; font-size: 15px; color: var(--cream-dim); }
+  .foot__grid { display: grid; gap: 24px; }
+  .foot__logo { height: 24px; width: auto; margin-bottom: 12px; }
+  .foot ul { display: grid; gap: 8px; }
+  .foot a { color: var(--cream); }
+  .foot__legal { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: 13px; }
+  @media (min-width: 900px) { .foot__grid { grid-template-columns: 2fr 1fr 1fr; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.2 4.6 3.4 11.5c-.9.4-.9 1.6 0 1.9l4.4 1.5 1.7 5.3c.2.7 1.1.9 1.6.4l2.5-2.4 4.7 3.4c.6.4 1.4.1 1.6-.6l2.6-13.4c.2-.8-.6-1.4-1.3-1Z"/><path d="m7.8 14.9 9.6-7-7.3 8.1"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.6 20.4 4.9 16A8.5 8.5 0 1 1 8 19.2Z"/><path d="M9.1 8.3c-.2 2.6 3 6.3 6.5 6.5l1-1.4-2-1.2-.9.8a4.4 4.4 0 0 1-2.5-2.5l.8-.9-1.2-2Z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 5.8v12.4c0 .6.7 1 1.2.6l9.7-6.2c.5-.3.5-1 0-1.3L9.7 5.2c-.5-.3-1.2 0-1.2.6Z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 3 8.3 7 10 4-1.7 7-5.6 7-10V6Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10.5 5-3v9l-5-3"/></symbol>
+  <symbol id="i-sign" viewBox="0 0 24 24"><path d="M15.5 4.5 19.5 8.5 9 19H5v-4Z"/><path d="M13 7l4 4M4 21.5h16"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a href="#top" class="top__logo"><img src="img/logo.svg" alt="Sia Motors — авто со всего мира" width="545" height="86"></a>
+    <nav class="top__nav" aria-label="Разделы"><a href="#offers">Предложения</a><a href="#routes">Доставка</a><a href="#deal">Этапы</a><a href="#reviews">Отзывы</a><a href="#faq">Вопросы</a></nav>
+    <a class="top__phone num" href="tel:+79958664002">+7 995 866-40-02</a>
+    <a class="btn btn--main" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="hero__bg"><img src="img/cars/3940_0.jpg" alt="" width="720" height="540" fetchpriority="high"></div>
+    <div class="wrap">
+      <div class="hero__grid">
+        <div>
+          <h1 class="h1">Автомобили из Китая под ключ</h1>
+          <p class="hero__lede">Подбираем, проверяем и выкупаем машины в Китае, Корее и Японии. Доставка во Владивосток или в Москву, таможню проходим сами.</p>
+          <ul class="ticks">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Цена и сроки — в договоре до оплаты</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Видеоотчёт по машине до выкупа</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>На связи живой менеджер, а не бот</li>
+          </ul>
+          <div class="cta">
+            <a class="btn btn--main" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать в Telegram</a>
+            <a class="btn btn--ghost" href="https://wa.me/79958664002"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          </div>
+        </div>
+        <div class="hero__form" id="contact">
+          <h2>Подберём машину под ваш бюджет</h2>
+          <p>Оставьте контакт — менеджер напишет и посчитает цену под ключ до вашего города.</p>
+          <form class="lead" data-lead novalidate>
+            <div class="field"><label class="field__label" for="f-name">Как к вам обращаться</label><input id="f-name" name="name" type="text" autocomplete="name" aria-describedby="f-name-err" required><span class="field__err" id="f-name-err"></span></div>
+            <div class="field"><label class="field__label" for="f-contact">Телефон или ник в Telegram</label><input id="f-contact" name="contact" type="text" autocomplete="tel" placeholder="+7 999 123-45-67 или @username" aria-describedby="f-contact-err" required><span class="field__err" id="f-contact-err"></span></div>
+            <div class="field"><label class="field__label" for="f-car">Какую машину ищете <small>(необязательно)</small></label><input id="f-car" name="car" type="text" placeholder="Например, Li Auto L7 до 4 млн"></div>
+            <div class="field"><label class="check"><input type="checkbox" name="consent" aria-describedby="f-consent-err" required><span>Даю <a href="consent.html">согласие на обработку персональных данных</a> и принимаю <a href="privacy.html">политику</a></span></label><span class="field__err" id="f-consent-err"></span></div>
+            <button class="btn btn--main" type="submit">Получить подбор</button>
+            <p class="lead__status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+      <ul class="facts">
+        <li><b>4+ года</b><span>привозим машины</span></li>
+        <li><b>100+ машин</b><span>привезли в 2025 году</span></li>
+        <li><b>2 маршрута</b><span>во Владивосток и в Москву</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec light" id="offers" aria-labelledby="adv-h">
+    <div class="wrap">
+      <h2 class="sr-only" id="adv-h">Почему Sia Motors</h2>
+      <ul class="adv">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-sign"/></svg><h3>Договор</h3><p>Машина, цена под ключ и сроки — на бумаге до оплаты.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><h3>Проверка</h3><p>История, юридическая чистота и состояние — до покупки.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-video"/></svg><h3>Видеоотчёты</h3><p>Показываем машину до выкупа и на каждом этапе пути.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg><h3>Документы</h3><p>Полный пакет для постановки на учёт после таможни.</p></li>
+      </ul>
+
+      <div class="offers-head">
+        <div class="sec__head" style="margin:0"><h2 class="h2">Свежие предложения</h2><p class="sec__lede">Из нашего Telegram-канала. Цены под ключ до Москвы на дату публикации — актуальную назовёт менеджер.</p></div>
+        <a href="https://t.me/siamotorss">Все предложения в канале</a>
+      </div>
+      <ul class="cards">
+        <template data-list="cars">
+          <li class="car">
+            <img src="img/cars/{img}.jpg" alt="{name}, {year}" width="800" height="600" loading="lazy">
+            <div class="car__body">
+              <h3 data-f="name"></h3>
+              <p class="car__meta"><span data-f="year"></span> · <span data-f="km"></span> · <span data-f="spec"></span></p>
+              <p class="car__price num" data-f="price"></p>
+              <p class="car__under">под ключ до Москвы</p>
+              <p class="car__links"><a href="https://t.me/SIAMOTORSmng?text=Здравствуйте! Интересует {name} {year} из канала">Хочу такую</a><a href="{post}">Пост в канале</a></p>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="routes" aria-labelledby="routes-h">
+    <div class="wrap">
+      <header class="sec__head"><h2 class="h2" id="routes-h">Доставка: два маршрута</h2><p class="sec__lede">Таможню проходим сами, вы получаете машину с документами.</p></header>
+      <div class="routes">
+        <article class="route">
+          <h3>Во Владивосток</h3>
+          <p class="route__path">Китай<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Уссурийск (таможня)<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Владивосток</p>
+          <p class="route__time num">4–6 недель</p>
+          <p>Забираете машину во Владивостоке или отправляем её дальше, в ваш город.</p>
+        </article>
+        <article class="route">
+          <h3>В Москву</h3>
+          <p class="route__path">Китай<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Казахстан<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Москва (таможня)</p>
+          <p class="route__time num">6–8 недель</p>
+          <p>Цены в наших предложениях — как раз под ключ до Москвы.</p>
+        </article>
+      </div>
+      <p class="routes__note">Срок зависит от сезона и загрузки границы, поэтому точный называем по конкретной машине — до оплаты.</p>
+    </div>
+  </section>
+
+  <section class="sec light" id="deal" aria-labelledby="deal-h">
+    <div class="wrap">
+      <header class="sec__head"><h2 class="h2" id="deal-h">Шесть шагов до ключей</h2></header>
+      <ol class="steps">
+        <li><span class="n num">1</span><div><h3>Заявка</h3><p>Пишете в Telegram или WhatsApp: какая машина, бюджет, город.</p></div></li>
+        <li><span class="n num">2</span><div><h3>Подбор</h3><p>Присылаем варианты и считаем цену под ключ до вашего города.</p></div></li>
+        <li><span class="n num">3</span><div><h3>Договор</h3><p>Фиксируем машину, итоговую цену и сроки.</p></div></li>
+        <li><span class="n num">4</span><div><h3>Проверка и выкуп</h3><p>Проверяем историю и состояние, присылаем видеоотчёт, выкупаем.</p></div></li>
+        <li><span class="n num">5</span><div><h3>Дорога и таможня</h3><p>Машина едет выбранным маршрутом, растаможку проводим сами.</p></div></li>
+        <li><span class="n num">6</span><div><h3>Получение</h3><p>Забираете машину с документами для постановки на учёт.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="reviews" aria-labelledby="reviews-h">
+    <div class="wrap">
+      <header class="sec__head"><h2 class="h2" id="reviews-h">Отзывы клиентов</h2><p class="sec__lede">Видео при получении машины. Ещё больше — в <a href="https://t.me/siamotorss">Telegram-канале</a>.</p></header>
+      <ul class="reviews">
+        <template data-list="reviews">
+          <li><button class="rv" type="button" data-video="{video}" aria-label="Смотреть видеоотзыв {i}"><img src="img/reviews/{img}.jpg" alt="" width="360" height="640" loading="lazy"><span class="rv__play"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span></button></li>
+        </template>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec light" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="parts">
+        <div><h2>Запчасти, обвесы, диски</h2><p>Привозим не только машины. Напишите модель и что нужно — подберём и посчитаем доставку.</p></div>
+        <a class="btn btn--dark" href="https://t.me/SIAMOTORSmng?text=Здравствуйте! Нужны запчасти для ">Спросить про запчасти</a>
+      </div>
+      <header class="sec__head" style="margin-top:clamp(56px,7vw,96px)"><h2 class="h2" id="faq-h">Частые вопросы</h2></header>
+      <div class="faq">
+        <details class="qa"><summary>Сколько едет машина из Китая?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>В среднем 4–6 недель до Владивостока и 6–8 недель до Москвы: подбор и выкуп, дорога до границы, таможня. Срок зависит от сезона и загрузки границы, поэтому точный называем по конкретной машине.</p></details>
+        <details class="qa"><summary>Как оплатить машину в Китае?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>По договору. Можно наличными, переводом на расчётный счёт или криптовалютой — схему обсуждаем заранее, до выкупа.</p></details>
+        <details class="qa"><summary>Будет ли мультимедиа на русском?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Большинство китайских машин можно русифицировать: меню, навигацию, часть голосовых функций. Что получится на конкретной модели, скажем до покупки.</p></details>
+        <details class="qa"><summary>Как вы проверяете машину?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Смотрим историю обслуживания и ДТП, юридическую чистоту и техническое состояние. Снимаем видео кузова, салона и ходовой и присылаем вам до выкупа.</p></details>
+        <details class="qa"><summary>Электромобиль или гибрид — стоит ли?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Возим и то и другое. Подскажем, как и где заряжать, чего ждать зимой и как модель обслуживается в России.</p></details>
+        <details class="qa"><summary>Где обслуживать китайскую машину?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Haval, Geely, Changan, Chery и многие другие марки официально продаются в России — сервис и запчасти есть. По редким моделям подскажем сервисы и поможем с запчастями.</p></details>
+        <details class="qa"><summary>А из Кореи и Японии везёте?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Да. В Корее история машины привязана к VIN, поэтому скрутить пробег практически невозможно. Сроки и цены по Корее и Японии назовём под ваш запрос.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec final" aria-labelledby="final-h">
+    <div class="wrap">
+      <header class="sec__head"><h2 class="h2" id="final-h">Расскажите, какую машину ищете</h2><p class="sec__lede">Ответит живой менеджер — в Telegram или WhatsApp.</p></header>
+      <div class="cta">
+        <a class="btn btn--main" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать в Telegram</a>
+        <a class="btn btn--ghost" href="https://wa.me/79958664002"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+      </div>
+      <p class="final__phone">или позвоните: <a class="num" href="tel:+79958664002">+7 995 866-40-02</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div><img class="foot__logo" src="img/logo.svg" alt="Sia Motors" width="545" height="86"><p>Автомобили из Китая, Кореи и Японии под ключ.</p></div>
+    <ul><li><a href="https://t.me/siamotorss">Telegram-канал</a></li><li><a href="https://www.youtube.com/@siamotorss">YouTube</a></li></ul>
+    <ul><li><a class="num" href="tel:+79958664002">+7 995 866-40-02</a></li><li><a href="mailto:sia.wk@mail.ru">sia.wk@mail.ru</a></li><li><a href="https://t.me/SIAMOTORSmng">@SIAMOTORSmng</a></li></ul>
+  </div>
+  <div class="wrap foot__legal">
+    <p>© <span data-year>2026</span> Sia Motors. ИП [ФИО], ИНН [—] — реквизиты появятся после регистрации.</p>
+    <p><a href="privacy.html">Политика обработки персональных данных</a> · <a href="consent.html">Согласие на обработку</a></p>
+  </div>
+</footer>
+
+<dialog class="player" aria-label="Видеоотзыв">
+  <video controls playsinline preload="none"></video>
+  <button class="player__close" type="button" aria-label="Закрыть" onclick="this.closest('dialog').close()"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+</dialog>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+</body>
+</html>
