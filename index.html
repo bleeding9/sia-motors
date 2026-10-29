@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sia Motors — варианты сайта</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="common.css">
+<style>
+  .hub { padding-block: clamp(40px, 6vw, 80px); }
+  .hub__logo { height: 28px; width: auto; margin-bottom: clamp(32px, 5vw, 56px); }
+  .hub h1 { font: 400 clamp(1.8rem, 4vw, 3rem)/1.1 var(--display); letter-spacing: 0.06em; text-transform: uppercase; max-width: 20ch; }
+  .hub__lede { margin: 16px 0 clamp(32px, 4vw, 48px); color: var(--cream-dim); max-width: 60ch; }
+  .vars { display: grid; gap: 14px; }
+  .var { display: grid; gap: 6px 28px; padding: 22px 24px; border-radius: 14px; border: 1px solid var(--line); text-decoration: none; transition: border-color 0.2s, background-color 0.2s; }
+  .var:hover { border-color: var(--bronze); background: rgba(174, 132, 73, 0.06); }
+  .var b { font: 400 18px/1.2 var(--display); letter-spacing: 0.08em; text-transform: uppercase; }
+  .var span { color: var(--cream-dim); }
+  .var i { font-style: normal; font-weight: 700; color: var(--bronze-text); }
+  @media (min-width: 900px) { .var { grid-template-columns: 260px 1fr auto; align-items: center; } }
+  .hub__notes { margin-top: clamp(36px, 5vw, 56px); display: grid; gap: 8px; font-size: 15px; color: var(--cream-dim); max-width: 75ch; }
+</style>
+</head>
+<body>
+<main class="wrap hub">
+  <img class="hub__logo" src="img/logo.svg" alt="Sia Motors" width="545" height="86">
+  <h1>Два варианта нового сайта</h1>
+  <p class="hub__lede">Контент у всех одинаковый: машины из канала, маршруты, этапы, видеоотзывы, вопросы, форма. Отличается только подача. Дорабатываем первый. Откройте на компьютере и на телефоне.</p>
+  <div class="vars">
+    <a class="var" href="v1-keis.html"><b>1. Кейс выдачи</b><span>Страница как кейс, который клиент получает с машиной. Огромное название страны — Китай, Корея, Япония — меняется вместе с машиной; вырезы-ложементы, линия маршрута в шапке показывает, где вы на странице.</span><i>Открыть</i></a>
+    <a class="var" href="v4-standart.html"><b>4. Стандарт ниши</b><span>Привычная структура сайтов привоза авто: фото на весь экран, форма справа, преимущества с иконками, светлые секции.</span><i>Открыть</i></a>
+  </div>
+  <div class="hub__notes">
+    <p>Форма проверяет поля и открывает Telegram или WhatsApp менеджера с уже набранной заявкой — человеку остаётся нажать «Отправить». При переносе на Tilda заменим на её формы (Telegram + почта).</p>
+    <p>Политика и согласие на обработку данных — шаблоны: реквизиты ИП появятся после регистрации, текст стоит показать юристу.</p>
+  </div>
+</main>
+</body>
+</html>
