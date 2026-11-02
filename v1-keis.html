@@ -206,6 +206,10 @@
     0%, 39%, 100% { background: var(--pocket); border-color: var(--cream); }
     41%, 96% { background: var(--bronze); border-color: var(--bronze); }
   }
+  @keyframes stop-lit-end {
+    0%, 83%, 100% { background: var(--pocket); border-color: var(--cream); }
+    85%, 96% { background: var(--bronze); border-color: var(--bronze); }
+  }
   @keyframes ping-mid { 0%, 39% { opacity: 0; transform: none; } 40% { opacity: 1; transform: none; } 52%, 100% { opacity: 0; transform: scale(3); } }
   @keyframes ping-end { 0%, 83% { opacity: 0; transform: none; } 84% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: scale(3); } }
   @keyframes stamp-hit { 0%, 83%, 92%, 100% { transform: rotate(-2deg) scale(1); } 86% { transform: rotate(-2deg) scale(1.16); } }
@@ -213,7 +217,7 @@
   .stop::before { content: ""; position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--pocket); border: 1.5px solid var(--cream); }
   .stop b { font-weight: 700; font-size: 0.9375rem; }
   .stop small { font-size: 0.8125rem; color: var(--cream-dim); }
-  .stop:last-child::before { background: var(--bronze); border-color: var(--bronze); }
+  .stop:first-child::before { background: var(--bronze); border-color: var(--bronze); }
   /* Отметка срока — штамп, приколотый к точке маршрута */
   .stop .stamp {
     justify-self: start; margin-top: 8px; padding: 4px 8px 3px; border: 1.5px solid currentColor; border-radius: 4px;
@@ -221,6 +225,7 @@
   }
   .stop:last-child .stamp { color: var(--bronze-text); animation: stamp-hit 9s ease-out infinite; }
   .stop:nth-child(2)::before { animation: stop-lit 9s ease infinite; }
+  .stop:last-child::before { animation: stop-lit-end 9s ease infinite; }
   .stop:nth-child(2)::after, .stop:last-child::after {
     content: ""; position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-radius: 50%;
     border: 1.5px solid var(--bronze); opacity: 0; pointer-events: none; animation: ping-mid 9s ease-out infinite;
@@ -233,7 +238,7 @@
     .line { grid-template-columns: 1fr; gap: 16px; padding-left: 28px; }
     .line::before { left: 6px; right: auto; top: 8px; bottom: 8px; border-top: 0; border-left: 1.5px dashed rgba(245, 241, 236, 0.35); }
     .line::after, .stop:nth-child(2)::after, .stop:last-child::after { display: none; }
-    .stop:nth-child(2)::before, .stop:last-child .stamp { animation: none; }
+    .stop:nth-child(2)::before, .stop:last-child::before, .stop:last-child .stamp { animation: none; }
     .stop { padding-top: 0; }
     .stop::before { left: -28px; top: 5px; }
   }
@@ -362,7 +367,7 @@
   @media (min-width: 900px) { .top__wa { display: none; } .top .tag { margin-left: auto; } }
   @media (prefers-reduced-motion: reduce) {
     .line::after { animation: none; opacity: 1; }
-    .stop:nth-child(2)::before, .stop:nth-child(2)::after, .stop:last-child::after, .stop:last-child .stamp { animation: none; }
+    .stop:nth-child(2)::before, .stop:nth-child(2)::after, .stop:last-child::before, .stop:last-child::after, .stop:last-child .stamp { animation: none; }
     .tag:hover { animation: none; }
     /* страны всё так же сменяются сами, но без движения — мягкой сменой прозрачности */
     .hero__word .ch { transform: none !important; opacity: 1 !important; filter: none !important; transition: none !important; }
