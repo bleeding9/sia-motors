@@ -55,8 +55,6 @@
   .top { position: sticky; top: 0; z-index: 20; background-color: var(--ink); background-image: inherit; border-bottom: 1px solid var(--line); }
   .top__in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-top: 10px; }
   .top__logo img { height: 34px; width: auto; }
-  .top__phone { margin-left: auto; font-size: 0.9375rem; color: var(--cream-dim); text-decoration: none; }
-  .top__phone:hover { color: var(--cream); }
   .route-nav { --n: 7; --p: 0; position: relative; order: 1; flex: 0 0 100%; padding: 4px 0 10px; }
   .route-nav ol { display: grid; grid-template-columns: repeat(var(--n), 1fr); position: relative; z-index: 1; }
   .route-nav a {
@@ -77,14 +75,13 @@
     transition: left 0.25s var(--ease);
   }
   /* Семь подписей помещаются рядом с логотипом и контактами только на широком экране */
-  @media (max-width: 1419px) { html { scroll-padding-top: 124px; } }
-  @media (min-width: 1420px) {
+  @media (max-width: 1249px) { html { scroll-padding-top: 124px; } }
+  @media (min-width: 1250px) {
     html { scroll-padding-top: 77px; }
     .top__in { flex-wrap: nowrap; min-height: 76px; gap: 24px; padding-top: 0; }
     .route-nav { order: 0; flex: 1; min-width: 0; padding: 0; }
     .route-nav__track { top: 4px; }
     .route-nav__now { top: -2.5px; }
-    .top__phone { margin-left: 0; }
   }
 
   /* Первый экран */
@@ -325,7 +322,6 @@
     /* точка маленькая, а нажимать удобно по площадке ~44px вокруг неё */
     .route-nav a::after { content: ""; position: absolute; left: -18px; top: -12px; width: 45px; height: 34px; }
     .route-nav a[aria-current] { font-size: 0.75rem; gap: 4px; white-space: nowrap; }
-    .top__phone { display: none; }
     .top__in { gap: 6px 12px; padding-top: 6px; }
     .top__wa { margin-left: auto; }
     /* логотип уступает место контактам, иначе на 320px ряд переносится */
@@ -341,7 +337,7 @@
     .hero__car .label__name { font-size: 0.8125rem; }
     .hero__car .label__price { font-size: 1.1875rem; }
   }
-  @media (min-width: 900px) { .top__wa { display: none; } }
+  @media (min-width: 900px) { .top__wa { display: none; } .top .tag { margin-left: auto; } }
   @media (prefers-reduced-motion: reduce) {
     .line::after { animation: none; opacity: 1; }
     .tag:hover { animation: none; }
@@ -381,7 +377,6 @@
         <li><a href="#contact">Связь</a></li>
       </ol>
     </nav>
-    <a class="top__phone num" href="tel:+79958664002">+7 995 866-40-02</a>
     <a class="link-wa top__wa" href="https://wa.me/79958664002" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
     <a class="tag tag--sm" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать</a>
   </div>

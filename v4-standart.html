@@ -36,9 +36,8 @@
   .top__nav { display: flex; gap: 22px; margin-left: auto; font-size: 15px; }
   .top__nav a { color: var(--cream-dim); text-decoration: none; }
   .top__nav a:hover { color: var(--cream); }
-  .top__phone { font-weight: 700; text-decoration: none; }
   .top .btn { min-height: 42px; padding: 8px 16px; font-size: 15px; }
-  @media (max-width: 999px) { .top__nav, .top__phone { display: none; } .top .btn { margin-left: auto; } }
+  @media (max-width: 999px) { .top__nav { display: none; } .top .btn { margin-left: auto; } }
 
   /* Первый экран: фото, заголовок, форма */
   .hero { position: relative; isolation: isolate; padding: clamp(40px, 6vw, 88px) 0 clamp(40px, 5vw, 64px); }
@@ -175,7 +174,6 @@
   <div class="wrap top__in">
     <a href="#top" class="top__logo"><img src="img/logo.svg" alt="Sia Motors — авто со всего мира" width="545" height="86"></a>
     <nav class="top__nav" aria-label="Разделы"><a href="#offers">Предложения</a><a href="#routes">Доставка</a><a href="#deal">Этапы</a><a href="#reviews">Отзывы</a><a href="#faq">Вопросы</a></nav>
-    <a class="top__phone num" href="tel:+79958664002">+7 995 866-40-02</a>
     <a class="btn btn--main" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать</a>
   </div>
 </header>
