@@ -320,6 +320,7 @@
   .qa summary::-webkit-details-marker { display: none; }
   .qa summary .ico { transition: transform 0.35s var(--ease); color: var(--cream-dim); }
   .qa[open] summary .ico { transform: rotate(45deg); color: var(--bronze-text); }
+  .qa.is-closing summary .ico { transform: none; color: var(--cream-dim); }
   .qa p { padding: 0 0 22px; color: var(--cream-dim); max-width: 68ch; }
   @media (min-width: 900px) { .faq-wrap { grid-template-columns: 4fr 8fr; gap: 40px; } }
 

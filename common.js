@@ -79,6 +79,30 @@ if (typeof document !== 'undefined') {
     player.addEventListener('click', (e) => { if (e.target === player) player.close(); });
   }
 
+  // Вопросы: <details> открывается рывком, поэтому высоту ведём сами; без JS и при «уменьшить движение» работает обычное открытие.
+  document.querySelectorAll('details.qa').forEach((qa) => {
+    const summary = qa.querySelector('summary');
+    let anim = null;
+    summary.addEventListener('click', (e) => {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      e.preventDefault();
+      const willOpen = !qa.open || qa.classList.contains('is-closing');
+      const from = qa.offsetHeight;
+      anim?.cancel();
+      qa.open = true;
+      qa.classList.toggle('is-closing', !willOpen);
+      const to = willOpen ? qa.offsetHeight : summary.offsetHeight + qa.offsetHeight - qa.clientHeight;
+      qa.style.overflow = 'hidden';
+      anim = qa.animate({ height: [from + 'px', to + 'px'] }, { duration: 350, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+      anim.onfinish = () => {
+        qa.open = willOpen;
+        qa.classList.remove('is-closing');
+        qa.style.overflow = '';
+        anim = null;
+      };
+    });
+  });
+
   document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
   // Яндекс.Метрика старого сайта — только на боевом домене, чтобы просмотры макетов не портили статистику.
