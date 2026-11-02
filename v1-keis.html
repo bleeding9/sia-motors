@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow"> <!-- демо-копия: убрать при запуске на siamotors.ru -->
 <title>Sia Motors — автомобили из Китая, Кореи и Японии под ключ</title>
-<meta name="description" content="Подбираем, проверяем и привозим автомобили из Китая, Кореи и Японии под ключ. Доставка во Владивосток и Москву, растаможка — на нас.">
+<meta name="description" content="Подбираем, проверяем и привозим автомобили из Китая, Кореи и Японии под ключ. Доставка по всей России и за рубеж, растаможка — на нас.">
 <meta name="theme-color" content="#1c1b19">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/Furore.otf" as="font" type="font/otf" crossorigin>
@@ -53,14 +53,14 @@
 
   /* Шапка: вторая строка — линия маршрута по странице */
   .top { position: sticky; top: 0; z-index: 20; background-color: var(--ink); background-image: inherit; border-bottom: 1px solid var(--line); }
-  .top__in { display: flex; align-items: center; gap: 24px; min-height: 64px; }
-  .top__logo img { height: 26px; width: auto; }
+  .top__in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-top: 10px; }
+  .top__logo img { height: 34px; width: auto; }
   .top__phone { margin-left: auto; font-size: 0.9375rem; color: var(--cream-dim); text-decoration: none; }
   .top__phone:hover { color: var(--cream); }
-  .route-nav { --n: 7; --p: 0; position: relative; padding: 4px 0 10px; }
+  .route-nav { --n: 7; --p: 0; position: relative; order: 1; flex: 0 0 100%; padding: 4px 0 10px; }
   .route-nav ol { display: grid; grid-template-columns: repeat(var(--n), 1fr); position: relative; z-index: 1; }
   .route-nav a {
-    display: inline-grid; justify-items: start; gap: 5px; padding-bottom: 2px;
+    display: grid; width: fit-content; justify-items: start; gap: 5px; padding-bottom: 2px;
     font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--cream-dim); text-decoration: none;
   }
   .route-nav a::before {
@@ -75,6 +75,16 @@
     position: absolute; z-index: 2; top: 1.5px; left: calc(4px + var(--p) * (100% - 4px - 100% / var(--n))); width: 14px; height: 14px; margin-left: -7px;
     border-radius: 50%; background: var(--bronze); border: 3px solid var(--ink); outline: 1.5px solid var(--bronze); pointer-events: none;
     transition: left 0.25s var(--ease);
+  }
+  /* Семь подписей помещаются рядом с логотипом и контактами только на широком экране */
+  @media (max-width: 1419px) { html { scroll-padding-top: 124px; } }
+  @media (min-width: 1420px) {
+    html { scroll-padding-top: 77px; }
+    .top__in { flex-wrap: nowrap; min-height: 76px; gap: 24px; padding-top: 0; }
+    .route-nav { order: 0; flex: 1; min-width: 0; padding: 0; }
+    .route-nav__track { top: 4px; }
+    .route-nav__now { top: -2.5px; }
+    .top__phone { margin-left: 0; }
   }
 
   /* Первый экран */
@@ -316,9 +326,11 @@
     .route-nav a::after { content: ""; position: absolute; left: -18px; top: -12px; width: 45px; height: 34px; }
     .route-nav a[aria-current] { font-size: 0.75rem; gap: 4px; white-space: nowrap; }
     .top__phone { display: none; }
-    .top__in { min-height: 56px; gap: 12px; }
+    .top__in { gap: 6px 12px; padding-top: 6px; }
     .top__wa { margin-left: auto; }
-    .top__logo img { height: 20px; }
+    /* логотип уступает место контактам, иначе на 320px ряд переносится */
+    .top__logo { flex: 1 1 0; min-width: 0; }
+    .top__logo img { width: min(100%, 127px); height: auto; }
     .hero__car .label { left: 10px; bottom: -26px; }
     /* на телефоне машина сразу под словом — чтобы смена страны была видна целиком */
     .hero__grid { gap: 0; }
@@ -356,11 +368,6 @@
 <header class="top">
   <div class="wrap top__in">
     <a href="#top" class="top__logo"><img src="img/logo.svg" alt="Sia Motors — авто со всего мира" width="545" height="86"></a>
-    <a class="top__phone num" href="tel:+79958664002">+7 995 866-40-02</a>
-    <a class="link-wa top__wa" href="https://wa.me/79958664002" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
-    <a class="tag tag--sm" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать</a>
-  </div>
-  <div class="wrap top__nav-wrap">
     <nav class="route-nav" aria-label="Разделы страницы">
       <div class="route-nav__track" aria-hidden="true"><span class="route-nav__done"></span></div>
       <span class="route-nav__now" aria-hidden="true"></span>
@@ -374,6 +381,9 @@
         <li><a href="#contact">Связь</a></li>
       </ol>
     </nav>
+    <a class="top__phone num" href="tel:+79958664002">+7 995 866-40-02</a>
+    <a class="link-wa top__wa" href="https://wa.me/79958664002" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
+    <a class="tag tag--sm" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать</a>
   </div>
 </header>
 
@@ -381,7 +391,7 @@
   <section class="hero" id="top">
     <div class="wrap">
       <h1 class="hero__title">
-        <span class="sr-only">Автомобили из Китая, Кореи и Японии под ключ с доставкой во Владивосток и Москву</span>
+        <span class="sr-only">Автомобили из Китая, Кореи и Японии под ключ с доставкой по всей России и за рубеж</span>
         <span class="hero__words" aria-hidden="true">
           <span class="hero__word is-on" style="--k: 1">Китай</span>
           <span class="hero__word" style="--k: 0.985">Корея</span>
@@ -395,16 +405,16 @@
             <button type="button" aria-pressed="false">Корея</button>
             <button type="button" aria-pressed="false">Япония</button>
           </div>
-          <p class="hero__lede">Автомобили под ключ с доставкой во Владивосток и Москву. Подбираем, проверяем и выкупаем у дилеров Китая, на площадках Кореи и аукционах Японии. Таможня на нас, цена — в договоре.</p>
+          <p class="hero__lede">Автомобили под ключ с доставкой по всей России и за рубеж. Подбираем, проверяем и выкупаем у дилеров Китая, на площадках Кореи и аукционах Японии. Таможня на нас, цена — в договоре.</p>
           <div class="hero__cta">
             <a class="tag" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать в Telegram</a>
             <a class="link-wa" href="https://wa.me/79958664002"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
           </div>
-          <p class="hero__note">Отвечает живой менеджер, а не бот.</p>
+          <p class="hero__note">Отвечает личный менеджер, а не бот.</p>
           <ul class="hero__facts">
             <li><b>4+ года</b>привозим машины</li>
             <li><b>100+ машин</b>в 2025 году</li>
-            <li><b>2 маршрута</b>Владивосток и Москва</li>
+            <li><b>Вся Россия</b>и доставка за рубеж</li>
           </ul>
         </div>
         <figure class="pocket hero__car">
@@ -455,7 +465,7 @@
     <div class="wrap">
       <header class="sec__head">
         <h2 class="h2" id="routes-h">Два маршрута из Китая</h2>
-        <p class="sec__lede">Выбираем путь под ваш город. Таможню проходим сами, вы получаете машину с документами.</p>
+        <p class="sec__lede">Доставляем по всей России и за рубеж, путь выбираем под ваш город. Таможню проходим сами, вы получаете машину с документами.</p>
       </header>
       <div class="routes">
         <article class="route pocket">
@@ -506,7 +516,7 @@
           <div><dt>Проверку</dt><dd>Историю, юридическую чистоту и техническое состояние смотрим до покупки.</dd></div>
           <div><dt>Видеоотчёты</dt><dd>Показываем машину до выкупа и держим в курсе на каждом этапе пути.</dd></div>
           <div><dt>Документы</dt><dd>Полный пакет для постановки на учёт после таможни.</dd></div>
-          <div><dt>Живого менеджера</dt><dd>На связи человек — от первого сообщения до выдачи ключей.</dd></div>
+          <div><dt>Личного менеджера</dt><dd>На связи человек — от первого сообщения до выдачи ключей.</dd></div>
         </dl>
         <p class="sheet__sign">4+ года работы · 100+ машин в 2025 году · сами ездим по автосалонам Китая</p>
       </div>
@@ -545,11 +555,11 @@
       <h2 class="h2" id="faq-h">Вопросы</h2>
       <div class="faq">
         <details class="qa"><summary>Сколько едет машина из Китая?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>В среднем 4–6 недель до Владивостока и 6–8 недель до Москвы: подбор и выкуп, дорога до границы, таможня. Срок зависит от сезона и загрузки границы, поэтому точный называем по конкретной машине.</p></details>
-        <details class="qa"><summary>Как оплатить машину в Китае?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>По договору. Можно наличными, переводом на расчётный счёт или криптовалютой — схему обсуждаем заранее, до выкупа.</p></details>
+        <details class="qa"><summary>Как оплатить машину в Китае?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>По договору. Можно наличными или переводом на расчётный счёт — схему обсуждаем заранее, до выкупа.</p></details>
         <details class="qa"><summary>Будет ли мультимедиа на русском?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Большинство китайских машин можно русифицировать: меню, навигацию, часть голосовых функций. Что получится на конкретной модели, скажем до покупки.</p></details>
         <details class="qa"><summary>Как вы проверяете машину?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Смотрим историю обслуживания и ДТП, юридическую чистоту и техническое состояние. Снимаем видео кузова, салона и ходовой и присылаем вам до выкупа.</p></details>
         <details class="qa"><summary>Электромобиль или гибрид — стоит ли?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Возим и то и другое. Подскажем, как и где заряжать, чего ждать зимой и как модель обслуживается в России.</p></details>
-        <details class="qa"><summary>Где обслуживать китайскую машину?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Haval, Geely, Changan, Chery и многие другие марки официально продаются в России — сервис и запчасти есть. По редким моделям подскажем сервисы и поможем с запчастями.</p></details>
+        <details class="qa"><summary>Где обслуживать китайскую машину?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Haval, Geely, Changan, Chery и многие другие марки официально продаются в России — сервис и запчасти есть. Lixiang, Zeekr и AITO тоже обслуживают в России — подскажем сервисы и поможем с запчастями, в том числе по редким моделям.</p></details>
         <details class="qa"><summary>А из Кореи и Японии везёте?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Да. В Корее история машины привязана к VIN, поэтому скрутить пробег практически невозможно. В Японии покупаем на аукционах, где у каждой машины есть лист осмотра с оценкой. Оттуда машины идут морем во Владивосток, дальше — автовозом в ваш город. Сроки и цены назовём под ваш запрос.</p></details>
       </div>
     </div>
@@ -570,7 +580,7 @@
         <form class="lead" data-lead novalidate>
           <div class="field"><label class="field__label" for="f-name">Как к вам обращаться</label><input id="f-name" name="name" type="text" autocomplete="name" aria-describedby="f-name-err" required><span class="field__err" id="f-name-err"></span></div>
           <div class="field"><label class="field__label" for="f-contact">Телефон или ник в Telegram</label><input id="f-contact" name="contact" type="text" autocomplete="tel" placeholder="+7 999 123-45-67 или @username" aria-describedby="f-contact-err" required><span class="field__err" id="f-contact-err"></span></div>
-          <div class="field"><label class="field__label" for="f-car">Какую машину ищете <small>(необязательно)</small></label><input id="f-car" name="car" type="text" placeholder="Например, Li Auto L7 до 4 млн"></div>
+          <div class="field"><label class="field__label" for="f-car">Какую машину ищете <small>(необязательно)</small></label><input id="f-car" name="car" type="text" placeholder="Например, Lixiang L7 до 4 млн"></div>
           <div class="field"><label class="check"><input type="checkbox" name="consent" aria-describedby="f-consent-err" required><span>Даю <a href="consent.html">согласие на обработку персональных данных</a> и принимаю <a href="privacy.html">политику</a></span></label><span class="field__err" id="f-consent-err"></span></div>
           <button class="tag" type="submit">Отправить заявку</button>
           <p class="lead__status" role="status" aria-live="polite"></p>
