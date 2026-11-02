@@ -294,8 +294,9 @@
   .reels {
     display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
     padding: 6px max(var(--gutter), (100% - var(--max)) / 2) 18px; scroll-padding-inline: max(var(--gutter), (100% - var(--max)) / 2);
-    scrollbar-width: thin;
+    scrollbar-width: none;
   }
+  .reels::-webkit-scrollbar { display: none; }
   .reels li { flex: 0 0 clamp(170px, 19vw, 250px); scroll-snap-align: start; }
   .reel { position: relative; width: 100%; padding: 8px; border: 0; display: block; color: var(--cream); }
   .reel img { aspect-ratio: 9 / 16; border-radius: 14px; width: 100%; object-fit: cover; filter: saturate(0.9); transition: filter 0.3s; }
@@ -307,6 +308,21 @@
   }
   .reel:hover .reel__play { transform: scale(1.08); background: var(--bronze); color: var(--on-bronze); border-color: var(--bronze); }
   .ico--fill { fill: currentColor; stroke: none; }
+  /* Стрелка лежит поверх видео, поэтому видна только у края, куда навели мышь. На сенсорных экранах листают пальцем. */
+  .reels-box { position: relative; }
+  .reels-arrow {
+    position: absolute; top: 50%; right: 24px; width: 56px; height: 56px; margin-top: -28px; border-radius: 50%;
+    display: grid; place-items: center; color: var(--cream); font-size: 1.25rem; cursor: pointer;
+    background: rgba(28, 27, 25, 0.88); border: 1.5px solid rgba(245, 241, 236, 0.6);
+    opacity: 0; pointer-events: none; transform: translateX(8px);
+    transition: opacity 0.2s, transform 0.4s var(--ease), background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .reels-arrow--prev { right: auto; left: 24px; transform: translateX(-8px); }
+  .reels-arrow--prev .ico { transform: rotate(180deg); }
+  .reels-box.is-near-next .reels-arrow--next, .reels-box.is-near-prev .reels-arrow--prev, .reels-arrow:focus-visible { opacity: 1; pointer-events: auto; transform: none; }
+  .reels-arrow:hover { background: var(--bronze); color: var(--on-bronze); border-color: var(--bronze); }
+  .reels-arrow[hidden] { display: none; }
+  @media (hover: none) { .reels-arrow { display: none; } }
   .reels-more { margin-top: 8px; }
 
   /* Вопросы */
@@ -566,11 +582,15 @@
         <p class="sec__lede">Короткие отзывы при получении машины. Нажмите, чтобы посмотреть.</p>
       </header>
     </div>
-    <ul class="reels" tabindex="0" aria-label="Видеоотзывы клиентов, листаются вбок">
-      <template data-list="reviews">
-        <li><button class="reel pocket" type="button" data-video="{video}" aria-label="Смотреть видеоотзыв {i}"><img src="img/reviews/{img}.jpg" alt="" width="360" height="640" loading="lazy"><span class="reel__play"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span></button></li>
-      </template>
-    </ul>
+    <div class="reels-box">
+      <ul class="reels" tabindex="0" aria-label="Видеоотзывы клиентов, листаются вбок">
+        <template data-list="reviews">
+          <li><button class="reel pocket" type="button" data-video="{video}" aria-label="Смотреть видеоотзыв {i}"><img src="img/reviews/{img}.jpg" alt="" width="360" height="640" loading="lazy"><span class="reel__play"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span></button></li>
+        </template>
+      </ul>
+      <button class="reels-arrow reels-arrow--prev" type="button" aria-label="Предыдущие отзывы" hidden><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <button class="reels-arrow reels-arrow--next" type="button" aria-label="Следующие отзывы"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
     <div class="wrap reels-more"><a href="https://t.me/siamotorss">Больше отзывов — в Telegram-канале</a></div>
   </section>
 
@@ -651,6 +671,40 @@
       links.forEach((a, i) => (i === k ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
     };
     addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+  })();
+
+  // Видеоотзывы: стрелки листают ленту и показываются, когда мышь у края. Стрелка назад нужна потому, что полосы прокрутки больше нет.
+  (() => {
+    const box = document.querySelector('.reels-box');
+    const reels = box.querySelector('.reels');
+    const prev = box.querySelector('.reels-arrow--prev');
+    const next = box.querySelector('.reels-arrow--next');
+    const update = () => {
+      const atStart = reels.scrollLeft <= 1;
+      const atEnd = reels.scrollLeft + reels.clientWidth >= reels.scrollWidth - 1;
+      // Скрываемая стрелка не должна уносить фокус клавиатуры: передаём его второй.
+      const focusTo = atEnd && document.activeElement === next ? prev : atStart && document.activeElement === prev ? next : null;
+      if (focusTo) { focusTo.hidden = false; focusTo.focus(); }
+      prev.hidden = atStart;
+      next.hidden = atEnd;
+    };
+    const page = (dir) => reels.scrollBy({
+      left: dir * Math.round(reels.clientWidth * 0.8),
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    });
+    prev.addEventListener('click', () => page(-1));
+    next.addEventListener('click', () => page(1));
+    box.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      const rect = box.getBoundingClientRect();
+      const zone = Math.max(140, rect.width * 0.18);
+      box.classList.toggle('is-near-prev', e.clientX - rect.left < zone);
+      box.classList.toggle('is-near-next', rect.right - e.clientX < zone);
+    });
+    box.addEventListener('pointerleave', () => box.classList.remove('is-near-prev', 'is-near-next'));
+    reels.addEventListener('scroll', update, { passive: true });
     addEventListener('resize', update);
     update();
   })();
