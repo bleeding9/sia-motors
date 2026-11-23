@@ -284,8 +284,19 @@
   .case-story button:hover:enabled { color: var(--bronze-text); }
   .case-story button:disabled { opacity: 0.25; cursor: default; }
   .case-story__prev svg { transform: rotate(180deg); }
-  .case-story__media > * { width: 100%; aspect-ratio: 4 / 5; max-height: calc(94vh - 112px); max-height: calc(94dvh - 112px); object-fit: contain; background: var(--pocket); }
+  .case-story__media { position: relative; overflow: hidden; }
+  .case-story__media > * { position: relative; width: 100%; aspect-ratio: 4 / 5; max-height: calc(94vh - 112px); max-height: calc(94dvh - 112px); object-fit: contain; background: var(--pocket); }
+  .case-story__media > [inert] { position: absolute; inset: 0; }
   .case-story__status { color: var(--cream-dim); font-size: 0.875rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    .probox__actions button, .case-story__nav button { transition: transform 160ms var(--ease), background-color 160ms, color 160ms; }
+    .probox__watch .ico { transition: transform 200ms var(--ease); }
+    .probox__watch:is(:hover, :focus-visible) .ico { transform: translateX(3px); }
+    .probox__more:is(:hover, :focus-visible) { transform: translateX(3px); }
+    .probox__actions button:active, .case-story__nav button:enabled:active { transform: scale(0.96); }
+    .case-story[open] { animation: case-open 200ms var(--ease); }
+    @keyframes case-open { from { opacity: 0; transform: translateY(8px); } }
+  }
 
   /* Что получаете: кремовая вкладка-опись */
   .why { display: grid; gap: 28px; align-items: start; }
@@ -724,10 +735,24 @@
 
     function show(index) {
       if (index < 0 || index >= slides.length) return;
+      const direction = Math.sign(index - current);
       current = index;
-      media.querySelector('video')?.pause();
+      media.querySelector('[inert]')?.remove();
+      const previous = media.firstElementChild;
+      if (previous instanceof HTMLVideoElement) previous.pause();
       const slide = slides[index].cloneNode(true);
-      media.replaceChildren(slide);
+      if (previous && dialog.open && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        previous.getAnimations().forEach(animation => animation.cancel());
+        previous.inert = true;
+        media.append(slide);
+        const motion = slide.animate(
+          [{ transform: 'translateX(' + (direction * 100) + '%)' }, { transform: 'translateX(0)' }],
+          { duration: 320, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        );
+        motion.finished.then(() => previous.remove(), () => previous.remove());
+      } else {
+        media.replaceChildren(slide);
+      }
       if (!dialog.open) dialog.showModal();
       status.textContent = slide.dataset.title + ' (' + (index + 1) + ' из ' + slides.length + ')';
       prev.disabled = index === 0;
@@ -740,7 +765,8 @@
     prev.addEventListener('click', () => show(current - 1));
     next.addEventListener('click', () => show(current + 1));
     dialog.addEventListener('close', () => {
-      media.querySelector('video')?.pause();
+      if (dialog.open) return;
+      media.querySelectorAll('video').forEach(video => video.pause());
       media.replaceChildren();
     });
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
