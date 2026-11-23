@@ -110,15 +110,13 @@
   /* Переключатель стран; полоска под активной — сколько осталось до следующей */
   .countries { display: flex; flex-wrap: wrap; gap: 4px 26px; margin-bottom: 18px; }
   .countries button {
-    position: relative; display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0;
+    position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0;
     border: 0; background: none; font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.04em; color: var(--cream-dim);
     transition: color 0.2s;
   }
-  .countries button::before { content: ""; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid currentColor; transition: background-color 0.2s, border-color 0.2s; }
   .countries button:hover, .countries [aria-pressed="true"] { color: var(--cream); }
-  .countries [aria-pressed="true"]::before { background: var(--bronze); border-color: var(--bronze); }
   .countries button::after {
-    content: ""; position: absolute; left: 18px; right: 0; bottom: 6px; height: 1.5px;
+    content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 1.5px;
     background: var(--bronze); transform: scaleX(0); transform-origin: left;
   }
   .countries [aria-pressed="true"]::after { animation: dwell 5s linear forwards; }
