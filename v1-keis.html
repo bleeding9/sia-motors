@@ -269,12 +269,11 @@
   .probox h2 { font-size: clamp(1.65rem, 3.2vw, 2.8rem); letter-spacing: 0.04em; }
   .probox h2 span { display: block; }
   .probox p { color: var(--cream-dim); margin-top: 18px; max-width: 47ch; }
-  .probox__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 22px; margin-top: 22px; }
-  .probox__watch, .probox__more { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; }
-  .probox__watch { background: var(--bronze); color: var(--on-bronze); border: 0; border-radius: 99px; padding: 10px 18px; }
+  .probox__watch {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 22px; font-weight: 600;
+    background: var(--bronze); color: var(--on-bronze); border: 0; border-radius: 99px; padding: 10px 18px;
+  }
   .probox__watch:hover { background: var(--bronze-hover); }
-  .probox__more { border: 0; padding: 0; background: transparent; color: var(--cream); text-decoration: underline; text-underline-offset: 0.25em; }
-  .probox__more:hover { color: var(--bronze-text); }
   @media (min-width: 820px) { .probox { grid-template-columns: 1.05fr 1fr; } }
   .case-story { padding: 0; width: min(94vw, 480px); max-height: 96vh; max-height: 96dvh; border: 1px solid var(--line); border-radius: 16px; background: var(--ink); color: var(--cream); }
   .case-story::backdrop { background: rgba(10, 10, 9, 0.86); }
@@ -289,11 +288,10 @@
   .case-story__media > [inert] { position: absolute; inset: 0; }
   .case-story__status { color: var(--cream-dim); font-size: 0.875rem; }
   @media (prefers-reduced-motion: no-preference) {
-    .probox__actions button, .case-story__nav button { transition: transform 160ms var(--ease), background-color 160ms, color 160ms; }
+    .probox__watch, .case-story__nav button { transition: transform 160ms var(--ease), background-color 160ms, color 160ms; }
     .probox__watch .ico { transition: transform 200ms var(--ease); }
     .probox__watch:is(:hover, :focus-visible) .ico { transform: translateX(3px); }
-    .probox__more:is(:hover, :focus-visible) { transform: translateX(3px); }
-    .probox__actions button:active, .case-story__nav button:enabled:active { transform: scale(0.96); }
+    .probox__watch:active, .case-story__nav button:enabled:active { transform: scale(0.96); }
     .case-story[open] { animation: case-open 200ms var(--ease); }
     @keyframes case-open { from { opacity: 0; transform: translateY(8px); } }
   }
@@ -588,10 +586,7 @@
       <div>
         <h2 class="h2" id="probox-h"><span>Toyota Probox</span> для Кирилла Сарычева</h2>
         <p>Кирилл искал машину, чтобы возить тренажёры детям в Пугачёв. Мы купили полноприводный Probox на аукционе в Японии, подготовили во Владивостоке и доставили в Москву.</p>
-        <div class="probox__actions">
-          <button class="probox__watch" type="button" aria-haspopup="dialog" aria-controls="probox-story"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Смотреть выдачу</button>
-          <button class="probox__more" type="button" aria-haspopup="dialog" aria-controls="probox-story">Вся история</button>
-        </div>
+        <button class="probox__watch" type="button" aria-haspopup="dialog" aria-controls="probox-story"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Смотреть историю</button>
       </div>
     </div>
   </section>
@@ -760,8 +755,7 @@
       if (slide instanceof HTMLVideoElement) slide.play().catch(() => {});
     }
 
-    document.querySelector('.probox__watch').addEventListener('click', () => show(slides.length - 1));
-    document.querySelector('.probox__more').addEventListener('click', () => show(0));
+    document.querySelector('.probox__watch').addEventListener('click', () => show(0));
     prev.addEventListener('click', () => show(current - 1));
     next.addEventListener('click', () => show(current + 1));
     dialog.addEventListener('close', () => {
