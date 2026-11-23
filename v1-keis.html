@@ -484,15 +484,15 @@
         <figure class="pocket hero__car">
           <div class="hero__shots">
             <img class="is-on" src="img/cars/3940_0.jpg" alt="Changan Q07 в автосалоне в Китае" width="720" height="540" fetchpriority="high"
-              data-name="Changan Q07 · 2025 · гибрид" data-price="3 150 000 ₽" data-note="под ключ до Москвы">
+              data-name="Changan Q07 2025 года, гибрид" data-price="3 150 000 ₽" data-note="под ключ до Москвы">
             <img src="img/cars/3562_0.jpg" alt="BMW M5 Touring у дилера BMW в Корее" width="800" height="600" decoding="async" fetchpriority="low" style="object-position: 50% 67%"
-              data-name="BMW M5 Touring · 2025 · 100 км" data-price="19 450 000 ₽" data-note="под ключ до Москвы">
+              data-name="BMW M5 Touring 2025 года, пробег 100 км" data-price="19 450 000 ₽" data-note="под ключ до Москвы">
             <img src="img/cars/mazda-cx30.jpg" alt="Mazda CX-30 на выставочном стенде" width="1280" height="691" decoding="async" fetchpriority="low"
               data-name="Mazda CX-30" data-price="Под заказ" data-note="подберём на аукционе Японии">
             <span class="hero__sweep" aria-hidden="true"></span>
           </div>
           <figcaption class="label">
-            <span class="label__name">Changan Q07 · 2025 · гибрид</span>
+            <span class="label__name">Changan Q07 2025 года, гибрид</span>
             <span class="label__price num">3 150 000 ₽</span>
             <span class="label__note">под ключ до Москвы</span>
           </figcaption>
@@ -512,7 +512,7 @@
           <li class="slot">
             <div class="pocket"><img src="img/cars/{img}.jpg" alt="{name}, {year}" width="800" height="600" loading="lazy"></div>
             <h3 class="slot__name" data-f="name"></h3>
-            <p class="slot__meta"><span data-f="year"></span> · <span data-f="km"></span> · <span data-f="spec"></span></p>
+            <p class="slot__meta car-specs"><span data-f="year"></span> <span data-f="km"></span> <span data-f="spec"></span></p>
             <p class="slot__price num" data-f="price"></p>
             <p class="slot__links">
               <a href="https://t.me/SIAMOTORSmng?text=Здравствуйте! Интересует {name} {year} из канала">Хочу такую</a>
@@ -578,7 +578,7 @@
         <h2 class="h2" id="probox-h"><span>Toyota Probox</span> для Кирилла Сарычева</h2>
         <p>Кирилл искал машину, чтобы возить тренажёры детям в Пугачёв. Мы купили полноприводный Probox на аукционе в Японии, подготовили во Владивостоке и доставили в Москву.</p>
         <div class="probox__actions">
-          <button class="probox__watch" type="button" aria-haspopup="dialog" aria-controls="probox-story"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Смотреть выдачу · 13 с</button>
+          <button class="probox__watch" type="button" aria-haspopup="dialog" aria-controls="probox-story"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Смотреть выдачу <small>13 с</small></button>
           <button class="probox__more" type="button" aria-haspopup="dialog" aria-controls="probox-story">Вся история</button>
         </div>
       </div>
@@ -596,7 +596,7 @@
           <div><dt>Документы</dt><dd>Полный пакет для постановки на учёт после таможни.</dd></div>
           <div><dt>Личного менеджера</dt><dd>На связи человек — от первого сообщения до выдачи ключей.</dd></div>
         </dl>
-        <p class="sheet__sign">4+ года работы · 100+ машин в 2025 году · сами ездим по автосалонам Китая</p>
+        <p class="sheet__sign">Работаем 4+ года и сами ездим по автосалонам Китая. В 2025 году привезли 100+ машин.</p>
       </div>
     </div>
   </section>
@@ -680,7 +680,7 @@
   </div>
   <div class="wrap foot__legal">
     <p>© <span data-year>2026</span> Sia Motors. ИП [ФИО], ИНН [—] — реквизиты появятся после регистрации.</p>
-    <p><a href="privacy.html">Политика обработки персональных данных</a> · <a href="consent.html">Согласие на обработку</a></p>
+    <p class="legal-links"><a href="privacy.html">Политика обработки персональных данных</a> <a href="consent.html">Согласие на обработку</a></p>
   </div>
 </footer>
 
@@ -729,7 +729,7 @@
       const slide = slides[index].cloneNode(true);
       media.replaceChildren(slide);
       if (!dialog.open) dialog.showModal();
-      status.textContent = slide.dataset.title + ' · ' + (index + 1) + ' из ' + slides.length;
+      status.textContent = slide.dataset.title + ' (' + (index + 1) + ' из ' + slides.length + ')';
       prev.disabled = index === 0;
       next.disabled = index === slides.length - 1;
       if (slide instanceof HTMLVideoElement) slide.play().catch(() => {});
