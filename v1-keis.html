@@ -263,6 +263,30 @@
     .step::after { top: 1px; }
   }
 
+  /* История выдачи */
+  .probox { display: grid; gap: clamp(22px, 5vw, 80px); align-items: center; }
+  .probox .pocket img { aspect-ratio: 1080 / 640; }
+  .probox h2 { font-size: clamp(1.65rem, 3.2vw, 2.8rem); letter-spacing: 0.04em; }
+  .probox h2 span { display: block; }
+  .probox p { color: var(--cream-dim); margin-top: 18px; max-width: 47ch; }
+  .probox__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 22px; margin-top: 22px; }
+  .probox__watch, .probox__more { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; }
+  .probox__watch { background: var(--bronze); color: var(--on-bronze); border: 0; border-radius: 99px; padding: 10px 18px; }
+  .probox__watch:hover { background: var(--bronze-hover); }
+  .probox__more { border: 0; padding: 0; background: transparent; color: var(--cream); text-decoration: underline; text-underline-offset: 0.25em; }
+  .probox__more:hover { color: var(--bronze-text); }
+  @media (min-width: 820px) { .probox { grid-template-columns: 1.05fr 1fr; } }
+  .case-story { padding: 0; width: min(94vw, 480px); max-height: 96vh; max-height: 96dvh; border: 1px solid var(--line); border-radius: 16px; background: var(--ink); color: var(--cream); }
+  .case-story::backdrop { background: rgba(10, 10, 9, 0.86); }
+  .case-story__head, .case-story__nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 10px; }
+  .case-story__head h3 { margin-left: 6px; font: 400 1rem var(--display); letter-spacing: 0.05em; }
+  .case-story button { display: grid; place-items: center; width: 44px; height: 44px; background: transparent; border: 0; }
+  .case-story button:hover:enabled { color: var(--bronze-text); }
+  .case-story button:disabled { opacity: 0.25; cursor: default; }
+  .case-story__prev svg { transform: rotate(180deg); }
+  .case-story__media > * { width: 100%; aspect-ratio: 4 / 5; max-height: calc(94vh - 112px); max-height: calc(94dvh - 112px); object-fit: contain; background: var(--pocket); }
+  .case-story__status { color: var(--cream-dim); font-size: 0.875rem; }
+
   /* Что получаете: кремовая вкладка-опись */
   .why { display: grid; gap: 28px; align-items: start; }
   .sheet { background: var(--cream); color: var(--graphite); border-radius: 8px 22px 22px 8px; padding: clamp(24px, 3.4vw, 44px); box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.9); }
@@ -547,6 +571,20 @@
     </div>
   </section>
 
+  <section class="sec" id="probox" aria-labelledby="probox-h">
+    <div class="wrap probox">
+      <figure class="pocket"><img src="media/probox/cover.jpg" alt="Иван и Кирилл Сарычев рядом с Toyota Probox в день выдачи" width="1080" height="640" loading="lazy"></figure>
+      <div>
+        <h2 class="h2" id="probox-h"><span>Toyota Probox</span> для Кирилла Сарычева</h2>
+        <p>Кирилл искал машину, чтобы возить тренажёры детям в Пугачёв. Мы купили полноприводный Probox на аукционе в Японии, подготовили во Владивостоке и доставили в Москву.</p>
+        <div class="probox__actions">
+          <button class="probox__watch" type="button" aria-haspopup="dialog" aria-controls="probox-story"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Смотреть выдачу · 13 с</button>
+          <button class="probox__more" type="button" aria-haspopup="dialog" aria-controls="probox-story">Вся история</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="sec" id="why" aria-labelledby="why-h">
     <div class="wrap why">
       <h2 class="h2" id="why-h">Что вы получаете вместе с машиной</h2>
@@ -646,6 +684,27 @@
   </div>
 </footer>
 
+<dialog class="case-story" id="probox-story" aria-labelledby="case-story-title">
+  <div class="case-story__head">
+    <h3 id="case-story-title">Toyota Probox</h3>
+    <form method="dialog"><button type="submit" aria-label="Закрыть историю" autofocus><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button></form>
+  </div>
+  <div class="case-story__media"></div>
+  <div class="case-story__nav">
+    <button class="case-story__prev" type="button" aria-label="Назад"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    <span class="case-story__status num" aria-live="polite"></span>
+    <button class="case-story__next" type="button" aria-label="Дальше"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </div>
+</dialog>
+<template id="probox-slides">
+  <img data-title="Встреча" src="media/probox/meeting.jpg" alt="Кирилл и Иван у машины. До выдачи оставалось 500 метров, когда понадобилась лопата.">
+  <img data-title="Покупка в Японии" src="media/probox/auction.jpg" alt="Полноприводный Probox на площадке. Кирилл искал машину для перевозки тренажёров детям в Пугачёв. Примерно через две недели после встречи в офисе машину купили на японском аукционе.">
+  <video data-title="Во Владивостоке" src="media/probox/03.mp4" aria-label="Приёмка и подготовка машины во Владивостоке" controls playsinline></video>
+  <video data-title="В Москве" src="media/probox/04.mp4" aria-label="Иван перед выдачей Probox в Москве" controls playsinline></video>
+  <video data-title="Последние 500 метров" src="media/probox/05.mp4" aria-label="Заснеженная дорога до места выдачи" controls playsinline></video>
+  <video data-title="Выдача" src="media/probox/06.mp4" aria-label="Встреча Кирилла и Ивана у Toyota Probox" controls playsinline></video>
+</template>
+
 <dialog class="player" aria-label="Видеоотзыв">
   <video controls playsinline preload="none"></video>
   <button class="player__close" type="button" aria-label="Закрыть" onclick="this.closest('dialog').close()"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
@@ -654,6 +713,39 @@
 <script src="data.js"></script>
 <script src="common.js"></script>
 <script>
+  (() => {
+    const dialog = document.querySelector('#probox-story');
+    const media = dialog.querySelector('.case-story__media');
+    const slides = document.querySelector('#probox-slides').content.children;
+    const prev = dialog.querySelector('.case-story__prev');
+    const next = dialog.querySelector('.case-story__next');
+    const status = dialog.querySelector('.case-story__status');
+    let current = 0;
+
+    function show(index) {
+      if (index < 0 || index >= slides.length) return;
+      current = index;
+      media.querySelector('video')?.pause();
+      const slide = slides[index].cloneNode(true);
+      media.replaceChildren(slide);
+      if (!dialog.open) dialog.showModal();
+      status.textContent = slide.dataset.title + ' · ' + (index + 1) + ' из ' + slides.length;
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+      if (slide instanceof HTMLVideoElement) slide.play().catch(() => {});
+    }
+
+    document.querySelector('.probox__watch').addEventListener('click', () => show(slides.length - 1));
+    document.querySelector('.probox__more').addEventListener('click', () => show(0));
+    prev.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+    dialog.addEventListener('close', () => {
+      media.querySelector('video')?.pause();
+      media.replaceChildren();
+    });
+    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+  })();
+
   // Линия маршрута в шапке: пройденное — сплошная, впереди — пунктир, огонёк — где вы сейчас.
   (() => {
     const nav = document.querySelector('.route-nav');
