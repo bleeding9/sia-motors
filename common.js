@@ -54,6 +54,10 @@ if (typeof document !== 'undefined') {
       check(contact, parseContact(contact.value) ? '' : 'Нужен телефон (+7 999 123-45-67) или ник в Telegram (@username)');
       check(consent, consent.checked ? '' : 'Без согласия мы не можем принять заявку');
       if (first) { first.focus(); return; }
+      if (form.hasAttribute('data-preview')) {
+        status.textContent = 'Форма заполнена верно. В предпросмотре данные остаются в браузере.';
+        return;
+      }
       const text = encodeURIComponent(leadMessage({ name: name.value.trim(), contact: parseContact(contact.value).value, car: form.elements.car?.value.trim() }));
       status.innerHTML = 'Заявка готова. Выберите мессенджер — сообщение уже набрано, останется нажать «Отправить».'
         + `<span class="lead__go"><a href="https://t.me/SIAMOTORSmng?text=${text}" target="_blank" rel="noopener">Отправить в Telegram</a>`
@@ -61,6 +65,7 @@ if (typeof document !== 'undefined') {
       status.querySelector('a').focus();
     });
     form.addEventListener('input', (e) => { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target, ''); });
+    if (form.hasAttribute('data-preview')) form.querySelector('[type="submit"]').disabled = false;
   });
 
   // Видеоотзывы: кнопка с data-video открывает плеер.

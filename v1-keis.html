@@ -509,7 +509,7 @@
   <section class="sec" id="offers" aria-labelledby="offers-h">
     <div class="wrap">
       <header class="sec__head">
-        <h2 class="h2" id="offers-h">Свежие предложения</h2>
+        <h2 class="h2" id="offers-h">Предложения из канала</h2>
         <p class="sec__lede">Машины из нашего Telegram-канала. Цены под ключ до Москвы на дату публикации — актуальную назовёт менеджер.</p>
       </header>
       <ul class="tray">
@@ -631,7 +631,7 @@
       <button class="reels-arrow reels-arrow--prev" type="button" aria-label="Предыдущие отзывы" hidden><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
       <button class="reels-arrow reels-arrow--next" type="button" aria-label="Следующие отзывы"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
     </div>
-    <div class="wrap reels-more"><a href="https://t.me/siamotorss">Больше отзывов — в Telegram-канале</a></div>
+    <div class="wrap reels-more"><a href="https://t.me/siamotorsotzyv">Больше отзывов — в Telegram-канале</a></div>
   </section>
 
   <section class="sec" id="faq" aria-labelledby="faq-h">
@@ -660,12 +660,12 @@
         </div>
       </div>
       <div class="sheet">
-        <form class="lead" data-lead novalidate>
+        <form class="lead" data-lead data-preview novalidate>
           <div class="field"><label class="field__label" for="f-name">Как к вам обращаться</label><input id="f-name" name="name" type="text" autocomplete="name" aria-describedby="f-name-err" required><span class="field__err" id="f-name-err"></span></div>
           <div class="field"><label class="field__label" for="f-contact">Телефон или ник в Telegram</label><input id="f-contact" name="contact" type="text" autocomplete="tel" placeholder="+7 999 123-45-67 или @username" aria-describedby="f-contact-err" required><span class="field__err" id="f-contact-err"></span></div>
           <div class="field"><label class="field__label" for="f-car">Какую машину ищете <small>(необязательно)</small></label><input id="f-car" name="car" type="text" placeholder="Например, Lixiang L7 до 4 млн"></div>
           <div class="field"><label class="check"><input type="checkbox" name="consent" aria-describedby="f-consent-err" required><span>Даю <a href="consent.html">согласие на обработку персональных данных</a> и принимаю <a href="privacy.html">политику</a></span></label><span class="field__err" id="f-consent-err"></span></div>
-          <button class="tag" type="submit">Отправить заявку</button>
+          <button class="tag" type="submit" disabled>Отправить заявку</button>
           <p class="lead__status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -680,8 +680,11 @@
     <ul><li><a class="num" href="tel:+79958664002">+7 995 866-40-02</a></li><li><a href="mailto:sia.wk@mail.ru">sia.wk@mail.ru</a></li><li><a href="https://t.me/SIAMOTORSmng">@SIAMOTORSmng</a></li></ul>
   </div>
   <div class="wrap foot__legal">
-    <p>© <span data-year>2026</span> Sia Motors. ИП [ФИО], ИНН [—] — реквизиты появятся после регистрации.</p>
+    <p>© <span data-year>2026</span> Sia Motors</p>
     <p class="legal-links"><a href="privacy.html">Политика обработки персональных данных</a> <a href="consent.html">Согласие на обработку</a></p>
+    <details><summary>О фотографии Mazda</summary>
+      <p>Фото Mazda CX-30 — <a href="https://commons.wikimedia.org/wiki/File:Mazda_CX-30_Genf_2019_1Y7A5806.jpg">Alexander Migl, Wikimedia Commons</a>. Размер изображения изменён для сайта. Лицензия — <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+    </details>
   </div>
 </footer>
 
