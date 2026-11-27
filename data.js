@@ -15,8 +15,8 @@ window.SIA = {
     { name: 'Skynomad N70', year: '2026', km: '', spec: 'Гибрид EREV, 1.5 л, 422 л.с.', price: '7 300 000 ₽', img: 'img/cars/skynomad-n70.jpg', post: 'https://t.me/siamotorss' },
     { name: 'Lynk & Co 900', year: '2026', km: '', spec: 'Гибрид, 2.0 л, 734 л.с.', price: '6 800 000 ₽', img: 'img/cars/lynk-co-900.jpg', post: 'https://t.me/siamotorss' },
     { name: 'Volkswagen Teramont Pro', year: '2026', km: '', spec: '2.0 л, 272 л.с., полный привод', price: '5 800 000 ₽', img: 'img/cars/teramont-pro.jpg', post: 'https://t.me/siamotorss' },
-    // Двенадцатая — BMW 320Li M Sport: характеристики и цена от владельца 2026-11-27.
-    { name: 'BMW 320Li M Sport', year: '2022', km: '44 000 км', spec: '2.0 л, 156 л.с.', price: '3 090 000 ₽', img: 'img/cars/bmw-320li-m-sport.jpg', post: 'https://t.me/siamotorss' }
+    // Двенадцатая — из поста канала 3991: 2,0 л, 156 л.с., задний привод, цена до Уссурийска.
+    { name: 'BMW 320Li M Sport', year: '2022', km: '44 000 км', spec: '2.0 л, 156 л.с., задний привод', price: '3 090 000 ₽', img: 'img/cars/bmw-320li-m-sport.jpg', post: 'https://t.me/siamotorss/3991' }
   ],
   // Видеоотзывы клиентов (со старого сайта, пережаты под веб: 540px, faststart). Постеры — кадр на 2-й секунде.
   reviews: [
