@@ -57,7 +57,7 @@
   .top__logo img { height: 34px; width: auto; }
   /* --last — ширина слова «Связь»: последняя колонка не добавляет пустоту перед кнопкой */
   .route-nav { --last: 2.625rem; --p: 0; position: relative; order: 1; flex: 0 0 100%; padding: 4px 0 10px; }
-  .route-nav ol { display: grid; grid-template-columns: repeat(6, 1fr) var(--last); position: relative; z-index: 1; }
+  .route-nav ol { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) var(--last); position: relative; z-index: 1; }
   .route-nav a {
     display: grid; width: fit-content; justify-items: start; gap: 5px; padding-bottom: 2px;
     font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--cream-dim); text-decoration: none;
@@ -68,12 +68,11 @@
   }
   .route-nav a:hover { color: var(--cream); }
   .route-nav a[aria-current] { color: var(--cream); }
-  .route-nav__track { position: absolute; left: 4px; right: var(--last); top: 8px; height: 0; border-top: 1.5px dashed rgba(245, 241, 236, 0.3); }
+  .route-nav__track { position: absolute; left: 4.5px; right: calc(var(--last) - 4.5px); top: 8px; height: 0; border-top: 1.5px dashed rgba(245, 241, 236, 0.3); }
   .route-nav__done { position: absolute; left: 0; top: -1.5px; height: 1.5px; width: calc(var(--p) * 100%); background: var(--cream); }
   .route-nav__now {
-    position: absolute; z-index: 2; top: 1.5px; left: calc(4px + var(--p) * (100% - 4px - var(--last))); width: 14px; height: 14px; margin-left: -7px;
+    position: absolute; z-index: 2; top: 1.5px; left: calc(4.5px + var(--p) * (100% - var(--last))); width: 14px; height: 14px; margin-left: -7px;
     border-radius: 50%; background: var(--bronze); border: 3px solid var(--ink); outline: 1.5px solid var(--bronze); pointer-events: none;
-    transition: left 0.25s var(--ease);
   }
   /* Семь подписей помещаются рядом с логотипом и контактами только на широком экране */
   @media (max-width: 1249px) { html { scroll-padding-top: 124px; } }
@@ -765,17 +764,49 @@
     const nav = document.querySelector('.route-nav');
     const links = [...nav.querySelectorAll('a')];
     const secs = links.map((a) => document.querySelector(a.hash));
+    const root = document.documentElement;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const stops = () => {
+      const padding = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+      const limit = root.scrollHeight - root.clientHeight;
+      return secs.map(s => Math.round(Math.max(0, Math.min(limit, scrollY + s.getBoundingClientRect().top - padding))));
+    };
     const update = () => {
-      const y = scrollY + innerHeight * 0.35;
-      const atEnd = innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
-      let k = 0;
-      secs.forEach((s, i) => { if (s.offsetTop <= y) k = i; });
-      const next = secs[k + 1];
-      const f = next ? Math.min(1, (y - secs[k].offsetTop) / (next.offsetTop - secs[k].offsetTop)) : 0;
-      if (atEnd) k = secs.length - 1;
-      nav.style.setProperty('--p', atEnd ? 1 : (k + f) / (secs.length - 1));
+      const positions = stops();
+      const y = Math.round(scrollY);
+      const k = Math.max(0, positions.findLastIndex(top => top <= y));
+      const next = positions[k + 1];
+      const f = next === undefined ? 0 : Math.max(0, (y - positions[k]) / (next - positions[k]));
+      nav.style.setProperty('--p', (k + f) / (secs.length - 1));
       links.forEach((a, i) => (i === k ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
     };
+    let frame = 0;
+    const stopAnimation = () => cancelAnimationFrame(frame);
+    for (const event of ['pointerdown', 'wheel', 'touchstart', 'keydown', 'popstate', 'resize']) {
+      addEventListener(event, stopAnimation, { passive: true });
+    }
+    links.forEach((link, index) => link.addEventListener('click', event => {
+      if (event.button || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      event.preventDefault();
+      stopAnimation();
+      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+      const from = scrollY;
+      const distance = stops()[index] - from;
+      const duration = Math.min(850, 300 + Math.abs(distance) * 0.12);
+      const start = performance.now();
+      const step = now => {
+        const t = reduced.matches || !distance ? 1 : Math.min(1, (now - start) / duration);
+        const eased = t * t * (3 - 2 * t);
+        window.scrollTo({ top: t === 1 ? stops()[index] : from + distance * eased, behavior: 'instant' });
+        if (t < 1) frame = requestAnimationFrame(step);
+        else {
+          secs[index].tabIndex = -1;
+          secs[index].focus({ preventScroll: true });
+          update();
+        }
+      };
+      frame = requestAnimationFrame(step);
+    }));
     addEventListener('scroll', update, { passive: true });
     addEventListener('resize', update);
     update();
