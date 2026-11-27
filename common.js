@@ -35,15 +35,17 @@ if (typeof document !== 'undefined') {
     tpl.replaceWith(frag);
   });
 
-  // В предпросмотре проверяем поля локально. Реальную заявку принимает бот.
-  document.querySelectorAll('form[data-lead][data-preview]').forEach((form) => {
+  // Заявка: поля проверяем против parseContact, отправляем в бота на Amvera (SIA.leadEndpoint).
+  const leadEndpoint = (window.SIA && window.SIA.leadEndpoint) || '';
+  document.querySelectorAll('form[data-lead]').forEach((form) => {
     const status = form.querySelector('.lead__status');
+    const button = form.querySelector('[type="submit"]');
     const setErr = (input, msg) => {
       const err = document.getElementById(input.getAttribute('aria-describedby'));
       input.setAttribute('aria-invalid', msg ? 'true' : 'false');
       if (err) err.textContent = msg || '';
     };
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = form.elements.name, contact = form.elements.contact, consent = form.elements.consent;
       let first = null;
@@ -52,10 +54,45 @@ if (typeof document !== 'undefined') {
       check(contact, parseContact(contact.value) ? '' : 'Нужен телефон (+7 999 123-45-67) или ник в Telegram (@username)');
       check(consent, consent.checked ? '' : 'Без согласия мы не можем принять заявку');
       if (first) { first.focus(); return; }
-      status.textContent = 'Форма заполнена верно. В предпросмотре данные остаются в браузере.';
+      if (!leadEndpoint) {
+        status.textContent = 'Форма заполнена верно. В предпросмотре данные остаются в браузере.';
+        return;
+      }
+      button.disabled = true;
+      status.textContent = 'Отправляем заявку…';
+      try {
+        const response = await fetch(leadEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name.value.trim(),
+            contact: contact.value.trim(),
+            car: (form.elements.car ? form.elements.car.value : '').trim(),
+            source: form.elements.source ? form.elements.source.value : 'site',
+            consent: consent.checked,
+          }),
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        form.reset();
+        status.textContent = 'Заявка отправлена. Менеджер свяжется с вами.';
+      } catch {
+        status.textContent = 'Не получилось отправить. Напишите в WhatsApp или менеджеру @SIAMOTORSmng.';
+      } finally {
+        button.disabled = false;
+      }
     });
     form.addEventListener('input', (e) => { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target, ''); });
-    form.querySelector('[type="submit"]').disabled = false;
+    button.disabled = false;
+  });
+
+  // Кнопки «Оставить заявку» ведут к форме и помечают, откуда пришёл человек.
+  document.querySelectorAll('[data-lead-source]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const form = document.querySelector('form[data-lead]');
+      if (!form) return;
+      if (form.elements.source) form.elements.source.value = link.dataset.leadSource;
+      form.elements.name.focus({ preventScroll: true });
+    });
   });
 
   // Видеоотзывы: кнопка с data-video открывает плеер.
