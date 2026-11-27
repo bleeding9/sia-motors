@@ -15,8 +15,8 @@ window.SIA = {
     { name: 'Skynomad N70', year: '2026', km: '', spec: 'Гибрид EREV, 286–422 л.с.', price: '7 300 000 ₽', img: 'img/cars/skynomad-n70.jpg', post: 'https://t.me/siamotorss' },
     { name: 'Lynk & Co 900', year: '2026', km: '', spec: 'Гибрид 2.0T, до 734 л.с.', price: '6 800 000 ₽', img: 'img/cars/lynk-co-900.jpg', post: 'https://t.me/siamotorss' },
     { name: 'Volkswagen Teramont Pro', year: '2026', km: '', spec: '2.0 TSI, 272 л.с., полный привод', price: '5 800 000 ₽', img: 'img/cars/teramont-pro.jpg', post: 'https://t.me/siamotorss' },
-    // Двенадцатая — из первого экрана: BMW M5 Touring в наличии в Корее (пост канала 3562).
-    { name: 'BMW M5 Touring', year: '2025', km: '100 км', spec: 'Touring', price: '19 450 000 ₽', img: 'img/cars/3562_0.jpg', post: 'https://t.me/siamotorss/3562' }
+    // Двенадцатая — Mazda CX-30 из первого экрана: под заказ, цену называет менеджер.
+    { name: 'Mazda CX-30', year: '', km: '', spec: 'Подберём на аукционе Японии', price: 'Под заказ', img: 'img/cars/mazda-cx30.jpg', post: 'https://t.me/siamotorss' }
   ],
   // Видеоотзывы клиентов (со старого сайта, пережаты под веб: 540px, faststart). Постеры — кадр на 2-й секунде.
   reviews: [
