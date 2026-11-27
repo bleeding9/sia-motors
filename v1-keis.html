@@ -382,13 +382,24 @@
   .sheet .tag::before { background: var(--cream); }
   @media (min-width: 900px) { .contact__grid { grid-template-columns: 5fr 7fr; gap: 40px; } }
 
-  .foot { border-top: 1px solid var(--line); padding: 44px 0 28px; font-size: 0.9375rem; color: var(--cream-dim); }
-  .foot__grid { display: grid; gap: 24px; }
-  .foot__logo { height: 26px; width: auto; margin-bottom: 12px; }
-  .foot ul { display: grid; gap: 8px; }
-  .foot a { color: var(--cream); }
-  .foot__legal { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: 0.8125rem; }
-  @media (min-width: 900px) { .foot__grid { grid-template-columns: 2fr 1fr 1fr; } }
+  /* Подвал: опись кейса — марка, три колонки ссылок под бронзовыми волосяными линиями */
+  .foot { border-top: 1px solid var(--line); padding: 52px 0 28px; font-size: 0.9375rem; color: var(--cream-dim); }
+  .foot__grid { display: grid; gap: 34px 40px; }
+  .foot__brand { display: grid; gap: 14px; align-content: start; max-width: 34ch; }
+  .foot__logo { height: 30px; width: auto; }
+  .foot__col { display: grid; gap: 12px; align-content: start; }
+  .foot__head {
+    font: 400 0.8125rem/1 var(--display); letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--bronze-text); padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  .foot ul { display: grid; gap: 9px; }
+  .foot a { color: var(--cream); text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(245, 241, 236, 0.35); }
+  .foot a:hover { color: var(--bronze-text); text-decoration-color: currentColor; }
+  .foot__legal { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: 0.8125rem; }
+  @media (min-width: 760px) {
+    .foot__grid { grid-template-columns: 1.5fr 1fr 1fr 1.25fr; }
+    .foot__legal { grid-auto-flow: column; justify-content: space-between; align-items: center; }
+  }
 
   @media (max-width: 899px) {
     .route-nav a { font-size: 0; gap: 0; padding: 0; position: relative; }
@@ -671,9 +682,32 @@
 
 <footer class="foot">
   <div class="wrap foot__grid">
-    <div><img class="foot__logo" src="img/logo.svg" alt="Sia Motors" width="545" height="86"><p>Автомобили из Китая, Кореи и Японии под ключ.</p></div>
-    <ul><li><a href="https://t.me/siamotorss">Telegram-канал</a></li><li><a href="https://www.youtube.com/@siamotorss">YouTube</a></li></ul>
-    <ul><li><a href="#contact" data-lead-source="site_footer">Оставить заявку</a></li></ul>
+    <div class="foot__brand">
+      <img class="foot__logo" src="img/logo.svg" alt="Sia Motors — авто со всего мира" width="545" height="86">
+      <p>Автомобили из Китая, Кореи и Японии под ключ. Подбор, проверка, выкуп, таможня, доставка.</p>
+    </div>
+    <div class="foot__col">
+      <h2 class="foot__head">Читать</h2>
+      <ul>
+        <li><a href="https://t.me/siamotorss">Telegram-канал</a></li>
+        <li><a href="https://t.me/siamotorsotzyv">Отзывы клиентов</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h2 class="foot__head">Смотреть</h2>
+      <ul>
+        <li><a href="https://www.youtube.com/@siamotorss">YouTube</a></li>
+        <li><a href="https://www.instagram.com/siamotors_/">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h2 class="foot__head">Написать</h2>
+      <ul>
+        <li><a href="https://t.me/SIAMOTORSmng">Менеджер в Telegram</a></li>
+        <li><a href="https://wa.me/79958664002">WhatsApp +7 995 866-40-02</a></li>
+        <li><a href="mailto:sia.wk@mail.ru">sia.wk@mail.ru</a></li>
+      </ul>
+    </div>
   </div>
   <div class="wrap foot__legal">
     <p>© <span data-year>2026</span> Sia Motors</p>
