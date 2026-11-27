@@ -66,7 +66,9 @@ a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1p
 h1, h2, h3 { text-wrap: balance; font-weight: 400; }
 p { text-wrap: pretty; }
 .num { font-variant-numeric: tabular-nums; }
-.car-specs { display: flex; flex-wrap: wrap; gap: 0 0.85em; }
+/* Характеристики машины: одна строка, всё через запятую — промежутки между словами одинаковые */
+.car-specs { display: block; }
+.car-specs span + span::before { content: ", "; }
 .legal-links { display: flex; flex-wrap: wrap; gap: 0.4em 1.5em; }
 .wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
 
