@@ -52,9 +52,7 @@ if (typeof document !== 'undefined') {
       check(contact, parseContact(contact.value) ? '' : 'Нужен телефон (+7 999 123-45-67) или ник в Telegram (@username)');
       check(consent, consent.checked ? '' : 'Без согласия мы не можем принять заявку');
       if (first) { first.focus(); return; }
-      status.innerHTML = 'В предпросмотре данные остаются в браузере.'
-        + '<span class="lead__go"><a href="https://t.me/SIAMOTORS_agent?start=site_form">Оставить заявку в боте</a></span>';
-      status.querySelector('a').focus();
+      status.textContent = 'Форма заполнена верно. В предпросмотре данные остаются в браузере.';
     });
     form.addEventListener('input', (e) => { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target, ''); });
     form.querySelector('[type="submit"]').disabled = false;
