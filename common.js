@@ -23,7 +23,10 @@ if (typeof document !== 'undefined') {
       const node = tpl.content.cloneNode(true);
       const fields = { ...item, i: i + 1 };
       const fill = (s) => s.replace(/\{(\w+)\}/g, (_, k) => fields[k] ?? '');
-      node.querySelectorAll('[data-f]').forEach((el) => { el.textContent = fill('{' + el.dataset.f + '}'); });
+      node.querySelectorAll('[data-f]').forEach((el) => {
+        el.textContent = fill('{' + el.dataset.f + '}');
+        if (!el.textContent.trim()) el.remove(); // пустое поле не должно оставлять зазор в сетке
+      });
       node.querySelectorAll('*').forEach((el) => {
         [...el.attributes].forEach((a) => { if (a.value.includes('{')) a.value = fill(a.value); });
       });
