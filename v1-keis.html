@@ -452,7 +452,7 @@
       </ol>
     </nav>
     <a class="link-wa top__wa" href="https://wa.me/79958664002" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
-    <a class="tag tag--sm" href="#contact" data-lead-source="site_header"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Оставить заявку</a>
+    <a class="tag tag--sm" href="#contact" data-lead-source="site_header"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Оставить заявку</a>
   </div>
 </header>
 
@@ -476,7 +476,7 @@
           </div>
           <p class="hero__lede">Автомобили под ключ с доставкой по всей России и за рубеж. Подбираем, проверяем и выкупаем у дилеров Китая, на площадках Кореи и аукционах Японии. Таможня на нас, цена — в договоре.</p>
           <div class="hero__cta">
-            <a class="tag" href="#contact" data-lead-source="site_hero"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Оставить заявку</a>
+            <a class="tag" href="#contact" data-lead-source="site_hero"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Оставить заявку</a>
             <a class="link-wa" href="https://wa.me/79958664002"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
           </div>
           <ul class="hero__facts">
@@ -766,11 +766,12 @@
     const links = [...nav.querySelectorAll('a')];
     const secs = links.map((a) => document.querySelector(a.hash));
     const root = document.documentElement;
-    const stops = () => {
+    const topOf = (el) => {
       const padding = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
       const limit = root.scrollHeight - root.clientHeight;
-      return secs.map(s => Math.round(Math.max(0, Math.min(limit, scrollY + s.getBoundingClientRect().top - padding))));
+      return Math.round(Math.max(0, Math.min(limit, scrollY + el.getBoundingClientRect().top - padding)));
     };
+    const stops = () => secs.map(topOf);
     const update = () => {
       const positions = stops();
       const y = Math.round(scrollY);
@@ -785,30 +786,48 @@
     for (const event of ['pointerdown', 'wheel', 'touchstart', 'keydown', 'popstate', 'resize']) {
       addEventListener(event, stopAnimation, { passive: true });
     }
-    links.forEach((link, index) => link.addEventListener('click', event => {
-      if (event.button || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
-      event.preventDefault();
+    // Общая плавная прокрутка: шапка, кнопки «Оставить заявку», ссылки в подвале. Под «уменьшить
+    // движение» тоже ведём плавно — иначе на десктопе с отключёнными анимациями клик прыгает.
+    const glide = (to, done) => {
       stopAnimation();
-      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
       const from = scrollY;
-      const distance = stops()[index] - from;
+      const distance = to() - from;
       const duration = Math.min(850, 300 + Math.abs(distance) * 0.12);
       const start = performance.now();
-      // Под «уменьшить движение» тоже ведём плавно: иначе на десктопе с отключёнными
-      // анимациями клик по разделу прыгает. Остальное движение по-прежнему гасится в CSS.
       const step = now => {
         const t = !distance ? 1 : Math.min(1, (now - start) / duration);
         const eased = t * t * (3 - 2 * t);
-        window.scrollTo({ top: t === 1 ? stops()[index] : from + distance * eased, behavior: 'instant' });
+        window.scrollTo({ top: t === 1 ? to() : from + distance * eased, behavior: 'instant' });
         if (t < 1) frame = requestAnimationFrame(step);
-        else {
-          secs[index].tabIndex = -1;
-          secs[index].focus({ preventScroll: true });
-          update();
-        }
+        else done();
       };
       frame = requestAnimationFrame(step);
+    };
+    const sameTab = (event) => !event.button && !event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
+    const follow = (link, target) => {
+      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+      glide(() => topOf(target), () => {
+        // Поле формы уже получило фокус (кнопки «Оставить заявку») — его не перебиваем.
+        if (target.contains(document.activeElement)) return update();
+        target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+        update();
+      });
+    };
+    links.forEach((link, index) => link.addEventListener('click', event => {
+      if (!sameTab(event)) return;
+      event.preventDefault();
+      follow(link, secs[index]);
     }));
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      const target = link.hash && !link.closest('.route-nav') && document.querySelector(link.hash);
+      if (!target) return;
+      link.addEventListener('click', event => {
+        if (!sameTab(event)) return;
+        event.preventDefault();
+        follow(link, target);
+      });
+    });
     addEventListener('scroll', update, { passive: true });
     addEventListener('resize', update);
     update();
