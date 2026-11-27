@@ -22,9 +22,6 @@ if (typeof document !== 'undefined') {
     (window.SIA[tpl.dataset.list] || []).forEach((item, i) => {
       const node = tpl.content.cloneNode(true);
       const fields = { ...item, i: i + 1 };
-      if (tpl.dataset.list === 'cars') {
-        fields.botSource = ('site_' + item.name + '_' + item.year).replace(/[^A-Za-z0-9_-]+/g, '_').slice(0, 64);
-      }
       const fill = (s) => s.replace(/\{(\w+)\}/g, (_, k) => fields[k] ?? '');
       node.querySelectorAll('[data-f]').forEach((el) => { el.textContent = fill('{' + el.dataset.f + '}'); });
       node.querySelectorAll('*').forEach((el) => {
@@ -85,12 +82,13 @@ if (typeof document !== 'undefined') {
     button.disabled = false;
   });
 
-  // Кнопки «Оставить заявку» ведут к форме и помечают, откуда пришёл человек.
+  // Кнопки «Оставить заявку» и «Хочу такую» ведут к форме, помечают источник и подставляют машину.
   document.querySelectorAll('[data-lead-source]').forEach((link) => {
     link.addEventListener('click', () => {
       const form = document.querySelector('form[data-lead]');
       if (!form) return;
       if (form.elements.source) form.elements.source.value = link.dataset.leadSource;
+      if (link.dataset.leadCar && form.elements.car) form.elements.car.value = link.dataset.leadCar;
       form.elements.name.focus({ preventScroll: true });
     });
   });
