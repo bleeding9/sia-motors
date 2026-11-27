@@ -55,10 +55,11 @@
   .top { position: sticky; top: 0; z-index: 20; background-color: var(--ink); background-image: inherit; border-bottom: 1px solid var(--line); }
   .top__in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-top: 10px; }
   .top__logo img { height: 34px; width: auto; }
-  .route-nav { --stops: 7; --p: 0; position: relative; order: 1; flex: 0 0 100%; padding: 4px 0 10px; }
-  .route-nav ol { display: grid; grid-template-columns: repeat(var(--stops), minmax(0, 1fr)); position: relative; z-index: 1; }
+  /* --last — ширина слова «Связь»: последняя колонка не добавляет пустоту перед кнопкой */
+  .route-nav { --last: 2.625rem; --p: 0; position: relative; order: 1; flex: 0 0 100%; padding: 4px 0 10px; }
+  .route-nav ol { display: grid; grid-template-columns: repeat(6, 1fr) var(--last); position: relative; z-index: 1; }
   .route-nav a {
-    display: grid; justify-content: center; justify-items: center; gap: 5px; padding-bottom: 2px;
+    display: grid; width: fit-content; justify-items: start; gap: 5px; padding-bottom: 2px;
     font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--cream-dim); text-decoration: none;
   }
   .route-nav a::before {
@@ -67,9 +68,13 @@
   }
   .route-nav a:hover { color: var(--cream); }
   .route-nav a[aria-current] { color: var(--cream); }
-  .route-nav__track { position: absolute; inset-inline: calc(50% / var(--stops)); top: 8px; height: 0; border-top: 1.5px dashed rgba(245, 241, 236, 0.3); }
+  .route-nav__track { position: absolute; left: 4px; right: var(--last); top: 8px; height: 0; border-top: 1.5px dashed rgba(245, 241, 236, 0.3); }
   .route-nav__done { position: absolute; left: 0; top: -1.5px; height: 1.5px; width: calc(var(--p) * 100%); background: var(--cream); }
-  .route-nav a[aria-current]::before { background: var(--bronze); border-color: var(--bronze); box-shadow: 0 0 0 2px var(--ink), 0 0 0 3.5px var(--bronze); }
+  .route-nav__now {
+    position: absolute; z-index: 2; top: 1.5px; left: calc(4px + var(--p) * (100% - 4px - var(--last))); width: 14px; height: 14px; margin-left: -7px;
+    border-radius: 50%; background: var(--bronze); border: 3px solid var(--ink); outline: 1.5px solid var(--bronze); pointer-events: none;
+    transition: left 0.25s var(--ease);
+  }
   /* Семь подписей помещаются рядом с логотипом и контактами только на широком экране */
   @media (max-width: 1249px) { html { scroll-padding-top: 124px; } }
   @media (min-width: 1250px) {
@@ -77,6 +82,7 @@
     .top__in { flex-wrap: nowrap; min-height: 76px; gap: 24px; padding-top: 0; }
     .route-nav { order: 0; flex: 1; min-width: 0; padding: 0; }
     .route-nav__track { top: 4px; }
+    .route-nav__now { top: -2.5px; }
   }
 
   /* Первый экран */
@@ -388,7 +394,7 @@
   @media (max-width: 899px) {
     .route-nav a { font-size: 0; gap: 0; padding: 0; position: relative; }
     /* точка маленькая, а нажимать удобно по площадке ~44px вокруг неё */
-    .route-nav a::after { content: ""; position: absolute; inset: -12px 0 auto; height: 34px; }
+    .route-nav a::after { content: ""; position: absolute; left: -18px; top: -12px; width: 45px; height: 34px; }
     .route-nav a[aria-current] { font-size: 0.75rem; gap: 4px; white-space: nowrap; }
     .top__in { gap: 6px 12px; padding-top: 6px; }
     .top__wa { margin-left: auto; }
@@ -435,6 +441,7 @@
     <a href="#top" class="top__logo"><img src="img/logo.svg" alt="Sia Motors — авто со всего мира" width="545" height="86"></a>
     <nav class="route-nav" aria-label="Разделы страницы">
       <div class="route-nav__track" aria-hidden="true"><span class="route-nav__done"></span></div>
+      <span class="route-nav__now" aria-hidden="true"></span>
       <ol>
         <li><a href="#top">Страны</a></li>
         <li><a href="#offers">Предложения</a></li>
@@ -763,8 +770,10 @@
       const atEnd = innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
       let k = 0;
       secs.forEach((s, i) => { if (s.offsetTop <= y) k = i; });
+      const next = secs[k + 1];
+      const f = next ? Math.min(1, (y - secs[k].offsetTop) / (next.offsetTop - secs[k].offsetTop)) : 0;
       if (atEnd) k = secs.length - 1;
-      nav.style.setProperty('--p', k / (secs.length - 1));
+      nav.style.setProperty('--p', atEnd ? 1 : (k + f) / (secs.length - 1));
       links.forEach((a, i) => (i === k ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
     };
     addEventListener('scroll', update, { passive: true });
