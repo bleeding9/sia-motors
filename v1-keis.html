@@ -48,8 +48,6 @@
   @keyframes swing { 30% { transform: rotate(-4deg); } 65% { transform: rotate(1.5deg); } 100% { transform: rotate(0); } }
   .tag--sm { min-height: 44px; padding: 10px 18px 10px 38px; font-size: 0.9375rem; }
   .tag--sm::before { left: 14px; width: 10px; height: 10px; margin-top: -5px; }
-  .link-wa { display: inline-flex; align-items: center; gap: 8px; min-height: 54px; padding-inline: 6px; font-weight: 600; text-decoration: none; }
-  .link-wa:hover { color: var(--bronze-text); }
 
   /* Шапка: вторая строка — линия маршрута по странице */
   .top { position: sticky; top: 0; z-index: 20; background-color: var(--ink); background-image: inherit; border-bottom: 1px solid var(--line); }
@@ -397,7 +395,7 @@
     .route-nav a::after { content: ""; position: absolute; left: -18px; top: -12px; width: 45px; height: 34px; }
     .route-nav a[aria-current] { font-size: 0.75rem; gap: 4px; white-space: nowrap; }
     .top__in { gap: 6px 12px; padding-top: 6px; }
-    .top__wa { margin-left: auto; }
+    .top .tag { margin-left: auto; }
     /* логотип уступает место контактам, иначе на 320px ряд переносится */
     .top__logo { flex: 1 1 0; min-width: 0; }
     .top__logo img { width: min(100%, 127px); height: auto; }
@@ -411,7 +409,7 @@
     .hero__car .label__name { font-size: 0.8125rem; }
     .hero__car .label__price { font-size: 1.1875rem; }
   }
-  @media (min-width: 900px) { .top__wa { display: none; } .top .tag { margin-left: auto; } }
+  @media (min-width: 900px) { .top .tag { margin-left: auto; } }
   @media (prefers-reduced-motion: reduce) {
     .line::after { animation: none; opacity: 1; }
     .stop:nth-child(2)::before, .stop:nth-child(2)::after, .stop:last-child::before, .stop:last-child::after, .stop:last-child .stamp { animation: none; }
@@ -429,7 +427,6 @@
 <a class="skip" href="#main">К содержанию</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.2 4.6 3.4 11.5c-.9.4-.9 1.6 0 1.9l4.4 1.5 1.7 5.3c.2.7 1.1.9 1.6.4l2.5-2.4 4.7 3.4c.6.4 1.4.1 1.6-.6l2.6-13.4c.2-.8-.6-1.4-1.3-1Z"/><path d="m7.8 14.9 9.6-7-7.3 8.1"/></symbol>
-  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.6 20.4 4.9 16A8.5 8.5 0 1 1 8 19.2Z"/><path d="M9.1 8.3c-.2 2.6 3 6.3 6.5 6.5l1-1.4-2-1.2-.9.8a4.4 4.4 0 0 1-2.5-2.5l.8-.9-1.2-2Z"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 5.8v12.4c0 .6.7 1 1.2.6l9.7-6.2c.5-.3.5-1 0-1.3L9.7 5.2c-.5-.3-1.2 0-1.2.6Z"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
@@ -452,8 +449,7 @@
         <li><a href="#contact">Связь</a></li>
       </ol>
     </nav>
-    <a class="link-wa top__wa" href="https://wa.me/79958664002" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
-    <a class="tag tag--sm" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать</a>
+    <a class="tag tag--sm" href="https://t.me/SIAMOTORS_agent?start=site"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Заявка в боте</a>
   </div>
 </header>
 
@@ -477,8 +473,7 @@
           </div>
           <p class="hero__lede">Автомобили под ключ с доставкой по всей России и за рубеж. Подбираем, проверяем и выкупаем у дилеров Китая, на площадках Кореи и аукционах Японии. Таможня на нас, цена — в договоре.</p>
           <div class="hero__cta">
-            <a class="tag" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать в Telegram</a>
-            <a class="link-wa" href="https://wa.me/79958664002"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+            <a class="tag" href="https://t.me/SIAMOTORS_agent?start=site"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Оставить заявку в Telegram</a>
           </div>
           <ul class="hero__facts">
             <li><b>4+ года</b>привозим машины</li>
@@ -520,7 +515,7 @@
             <p class="slot__meta car-specs"><span data-f="year"></span> <span data-f="km"></span> <span data-f="spec"></span></p>
             <p class="slot__price num" data-f="price"></p>
             <p class="slot__links">
-              <a href="https://t.me/SIAMOTORSmng?text=Здравствуйте! Интересует {name} {year} из канала">Хочу такую</a>
+              <a href="https://t.me/SIAMOTORS_agent?start={botSource}">Хочу такую</a>
               <a href="{post}">Пост в канале<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </p>
           </li>
@@ -566,7 +561,7 @@
     <div class="wrap">
       <header class="sec__head"><h2 class="h2" id="deal-h">Как проходит сделка</h2></header>
       <ol class="steps">
-        <li class="step is-now"><span class="step__n num">01</span><h3>Заявка</h3><p>Пишете в Telegram или WhatsApp: какая машина, бюджет, город.</p><span class="step__here">Вы здесь</span></li>
+        <li class="step is-now"><span class="step__n num">01</span><h3>Заявка</h3><p>Оставляете заявку в Telegram-боте или через форму на сайте.</p><span class="step__here">Вы здесь</span></li>
         <li class="step"><span class="step__n num">02</span><h3>Подбор</h3><p>Присылаем варианты и считаем цену под ключ до вашего города.</p></li>
         <li class="step"><span class="step__n num">03</span><h3>Договор</h3><p>Фиксируем машину, итоговую цену и сроки.</p></li>
         <li class="step"><span class="step__n num">04</span><h3>Проверка и выкуп</h3><p>Проверяем историю и состояние, присылаем видеоотчёт, выкупаем.</p></li>
@@ -596,7 +591,7 @@
           <div><dt>Проверку</dt><dd>Историю, юридическую чистоту и техническое состояние смотрим до покупки.</dd></div>
           <div><dt>Видеоотчёты</dt><dd>Показываем машину до выкупа и держим в курсе на каждом этапе пути.</dd></div>
           <div><dt>Документы</dt><dd>Полный пакет для постановки на учёт после таможни.</dd></div>
-          <div><dt>Личного менеджера</dt><dd>На связи человек — от первого сообщения до выдачи ключей.</dd></div>
+          <div><dt>Личного менеджера</dt><dd>После заявки менеджер ведёт сделку до выдачи ключей.</dd></div>
         </dl>
         <p class="sheet__sign">Работаем 4+ года и сами ездим по автосалонам Китая. В 2025 году привезли 100+ машин.</p>
       </div>
@@ -608,9 +603,9 @@
       <div class="parts pocket">
         <div>
           <h2 id="parts-h">Запчасти, обвесы, диски</h2>
-          <p>Привозим не только машины. Напишите модель и что нужно — подберём и посчитаем доставку.</p>
+          <p>Привозим не только машины. В заявке укажите модель машины и нужную деталь.</p>
         </div>
-        <a class="btn-line" href="https://t.me/SIAMOTORSmng?text=Здравствуйте! Нужны запчасти для ">Спросить про запчасти</a>
+        <a class="btn-line" href="https://t.me/SIAMOTORS_agent?start=site_parts">Заявка на запчасти</a>
       </div>
     </div>
   </section>
@@ -653,10 +648,9 @@
     <div class="wrap contact__grid">
       <div class="contact__copy">
         <h2 class="h2" id="contact-h">Расскажите, какую машину ищете</h2>
-        <p>Ответим в Telegram, WhatsApp или по телефону — как вам удобнее. Посчитаем цену под ключ до вашего города.</p>
+        <p>Оставьте заявку в боте или заполните форму. Менеджер рассчитает цену под ключ до вашего города.</p>
         <div class="hero__cta">
-          <a class="tag" href="https://t.me/SIAMOTORSmng"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Написать в Telegram</a>
-          <a class="link-wa" href="https://wa.me/79958664002"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="tag" href="https://t.me/SIAMOTORS_agent?start=site"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg>Оставить заявку в Telegram</a>
         </div>
       </div>
       <div class="sheet">
@@ -677,7 +671,7 @@
   <div class="wrap foot__grid">
     <div><img class="foot__logo" src="img/logo.svg" alt="Sia Motors" width="545" height="86"><p>Автомобили из Китая, Кореи и Японии под ключ.</p></div>
     <ul><li><a href="https://t.me/siamotorss">Telegram-канал</a></li><li><a href="https://www.youtube.com/@siamotorss">YouTube</a></li></ul>
-    <ul><li><a class="num" href="tel:+79958664002">+7 995 866-40-02</a></li><li><a href="mailto:sia.wk@mail.ru">sia.wk@mail.ru</a></li><li><a href="https://t.me/SIAMOTORSmng">@SIAMOTORSmng</a></li></ul>
+    <ul><li><a href="https://t.me/SIAMOTORS_agent?start=site">Оставить заявку в боте</a></li></ul>
   </div>
   <div class="wrap foot__legal">
     <p>© <span data-year>2026</span> Sia Motors</p>

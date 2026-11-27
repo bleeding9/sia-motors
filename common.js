@@ -12,12 +12,7 @@ function parseContact(raw) {
   return null;
 }
 
-// Текст заявки, который уйдёт менеджеру в мессенджер; пустую «машину» не пишем.
-function leadMessage({ name, contact, car }) {
-  return ['Здравствуйте! Заявка с сайта.', 'Имя: ' + name, 'Контакт: ' + contact, car ? 'Ищу: ' + car : ''].filter(Boolean).join('\n');
-}
-
-if (typeof module !== 'undefined') module.exports = { parseContact, leadMessage };
+if (typeof module !== 'undefined') module.exports = { parseContact };
 
 if (typeof document !== 'undefined') {
   // <template data-list="cars"> → по копии на каждый элемент SIA.cars.
@@ -26,7 +21,11 @@ if (typeof document !== 'undefined') {
     const frag = document.createDocumentFragment();
     (window.SIA[tpl.dataset.list] || []).forEach((item, i) => {
       const node = tpl.content.cloneNode(true);
-      const fill = (s) => s.replace(/\{(\w+)\}/g, (_, k) => (k === 'i' ? i + 1 : item[k] ?? ''));
+      const fields = { ...item, i: i + 1 };
+      if (tpl.dataset.list === 'cars') {
+        fields.botSource = ('site_' + item.name + '_' + item.year).replace(/[^A-Za-z0-9_-]+/g, '_').slice(0, 64);
+      }
+      const fill = (s) => s.replace(/\{(\w+)\}/g, (_, k) => fields[k] ?? '');
       node.querySelectorAll('[data-f]').forEach((el) => { el.textContent = fill('{' + el.dataset.f + '}'); });
       node.querySelectorAll('*').forEach((el) => {
         [...el.attributes].forEach((a) => { if (a.value.includes('{')) a.value = fill(a.value); });
@@ -36,9 +35,8 @@ if (typeof document !== 'undefined') {
     tpl.replaceWith(frag);
   });
 
-  // Форма: проверка на месте, затем заявка уходит менеджеру через мессенджер с уже набранным текстом.
-  // shortcut: без сервера заявка доходит, только если человек нажмёт «Отправить» в мессенджере; при переносе на Tilda — её формы (Telegram + почта).
-  document.querySelectorAll('form[data-lead]').forEach((form) => {
+  // В предпросмотре проверяем поля локально. Реальную заявку принимает бот.
+  document.querySelectorAll('form[data-lead][data-preview]').forEach((form) => {
     const status = form.querySelector('.lead__status');
     const setErr = (input, msg) => {
       const err = document.getElementById(input.getAttribute('aria-describedby'));
@@ -54,18 +52,12 @@ if (typeof document !== 'undefined') {
       check(contact, parseContact(contact.value) ? '' : 'Нужен телефон (+7 999 123-45-67) или ник в Telegram (@username)');
       check(consent, consent.checked ? '' : 'Без согласия мы не можем принять заявку');
       if (first) { first.focus(); return; }
-      if (form.hasAttribute('data-preview')) {
-        status.textContent = 'Форма заполнена верно. В предпросмотре данные остаются в браузере.';
-        return;
-      }
-      const text = encodeURIComponent(leadMessage({ name: name.value.trim(), contact: parseContact(contact.value).value, car: form.elements.car?.value.trim() }));
-      status.innerHTML = 'Заявка готова. Выберите мессенджер — сообщение уже набрано, останется нажать «Отправить».'
-        + `<span class="lead__go"><a href="https://t.me/SIAMOTORSmng?text=${text}" target="_blank" rel="noopener">Отправить в Telegram</a>`
-        + `<a href="https://wa.me/79958664002?text=${text}" target="_blank" rel="noopener">Отправить в WhatsApp</a></span>`;
+      status.innerHTML = 'В предпросмотре данные остаются в браузере.'
+        + '<span class="lead__go"><a href="https://t.me/SIAMOTORS_agent?start=site_form">Оставить заявку в боте</a></span>';
       status.querySelector('a').focus();
     });
     form.addEventListener('input', (e) => { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target, ''); });
-    if (form.hasAttribute('data-preview')) form.querySelector('[type="submit"]').disabled = false;
+    form.querySelector('[type="submit"]').disabled = false;
   });
 
   // Видеоотзывы: кнопка с data-video открывает плеер.
