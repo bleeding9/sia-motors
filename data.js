@@ -12,7 +12,7 @@ window.SIA = {
     { name: 'Audi Q3', year: '2023', km: '19 000 км', spec: '1.4 л, 150 л.с.', price: '3 100 000 ₽', img: 'img/cars/3813_0.jpg', post: 'https://t.me/siamotorss/3813' },
     { name: 'Audi A3 Sportback', year: '2022', km: '19 000 км', spec: '1.4 л, 150 л.с.', price: '2 300 000 ₽', img: 'img/cars/3855_0.jpg', post: 'https://t.me/siamotorss/3855' },
     // Характеристики — из открытых обзоров (5koleso, rg.ru, avtomir, yiche): приблизительные, пробег не выдумываем.
-    { name: 'Skynomad N70 / N90', year: '2026', km: '', spec: 'Гибрид EREV, 286–422 л.с., до 1700 км', price: '7 300 000 ₽', img: 'img/cars/skynomad-n90.jpg', post: 'https://t.me/siamotorss' },
+    { name: 'Skynomad N70', year: '2026', km: '', spec: 'Гибрид EREV, 286–422 л.с.', price: '7 300 000 ₽', img: 'img/cars/skynomad-n70.jpg', post: 'https://t.me/siamotorss' },
     { name: 'Lynk & Co 900', year: '2026', km: '', spec: 'Гибрид 2.0T, до 734 л.с.', price: '6 800 000 ₽', img: 'img/cars/lynk-co-900.jpg', post: 'https://t.me/siamotorss' },
     { name: 'Volkswagen Teramont Pro', year: '2026', km: '', spec: '2.0 TSI, 272 л.с., полный привод', price: '5 800 000 ₽', img: 'img/cars/teramont-pro.jpg', post: 'https://t.me/siamotorss' },
     // Двенадцатая — из первого экрана: BMW M5 Touring в наличии в Корее (пост канала 3562).
