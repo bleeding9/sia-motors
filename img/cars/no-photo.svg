@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" aria-label="Фото машины в Telegram-канале">
+  <rect width="800" height="600" fill="#242321"/>
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#ae8449" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 8"/>
+  <path d="M330 292h140" stroke="#ae8449" stroke-width="2"/>
+  <text x="400" y="352" text-anchor="middle" font-family="Manrope, system-ui, -apple-system, sans-serif" font-size="28" letter-spacing="3" fill="#bdb8b1">ФОТО — В КАНАЛЕ</text>
+</svg>

@@ -97,7 +97,7 @@ if (typeof document !== 'undefined') {
       if (!form) return;
       if (form.elements.source) form.elements.source.value = link.dataset.leadSource;
       if (link.dataset.leadCar && form.elements.car) {
-        form.elements.car.value = link.dataset.leadCar;
+        form.elements.car.value = link.dataset.leadCar.replace(/\s+/g, ' ').trim();
         flashOnArrival(form.elements.car);
       }
       form.elements.name.focus({ preventScroll: true });

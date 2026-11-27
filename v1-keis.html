@@ -163,14 +163,15 @@
     .tray { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gutter)); padding: 6px var(--gutter) 14px; scroll-padding-inline: var(--gutter); }
     .slot { flex: 0 0 82%; scroll-snap-align: start; }
   }
-  .slot { display: grid; align-content: start; gap: 8px; }
+  .slot { display: flex; flex-direction: column; gap: 8px; }
+  /* ссылки всегда внизу карточки: названия разной длины не должны разъезжаться по строкам */
   .slot .pocket { transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease); }
   .slot:hover .pocket { transform: translateY(-6px); box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.75), 0 22px 30px -18px rgba(0, 0, 0, 0.9); }
   .slot__name { margin-top: 10px; font: 400 1.0625rem/1.25 var(--display); letter-spacing: 0.06em; text-transform: uppercase; }
   .slot__meta { font-size: 0.875rem; color: var(--cream-dim); }
   .slot__price { font: 400 1.375rem/1.2 var(--display); letter-spacing: 0.04em; color: var(--bronze-text); }
   .slot__price::after { content: " под ключ до Москвы"; font: 400 0.8125rem var(--text); letter-spacing: 0; color: var(--cream-dim); }
-  .slot__links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.875rem; }
+  .slot__links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.875rem; margin-top: auto; }
   .slot__links a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
   .slot__links a:first-child { font-weight: 700; }
   .sec__more { margin-top: 32px; }
@@ -534,7 +535,7 @@
       <ul class="tray">
         <template data-list="cars">
           <li class="slot">
-            <div class="pocket"><img src="img/cars/{img}.jpg" alt="{name}, {year}" width="800" height="600" loading="lazy"></div>
+            <div class="pocket"><img src="{img}" alt="{name}" width="800" height="600" loading="lazy"></div>
             <h3 class="slot__name" data-f="name"></h3>
             <p class="slot__meta car-specs"><span data-f="year"></span> <span data-f="km"></span> <span data-f="spec"></span></p>
             <p class="slot__price num" data-f="price"></p>
