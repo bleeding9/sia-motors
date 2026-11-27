@@ -765,7 +765,6 @@
     const links = [...nav.querySelectorAll('a')];
     const secs = links.map((a) => document.querySelector(a.hash));
     const root = document.documentElement;
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const stops = () => {
       const padding = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
       const limit = root.scrollHeight - root.clientHeight;
@@ -794,8 +793,10 @@
       const distance = stops()[index] - from;
       const duration = Math.min(850, 300 + Math.abs(distance) * 0.12);
       const start = performance.now();
+      // Под «уменьшить движение» тоже ведём плавно: иначе на десктопе с отключёнными
+      // анимациями клик по разделу прыгает. Остальное движение по-прежнему гасится в CSS.
       const step = now => {
-        const t = reduced.matches || !distance ? 1 : Math.min(1, (now - start) / duration);
+        const t = !distance ? 1 : Math.min(1, (now - start) / duration);
         const eased = t * t * (3 - 2 * t);
         window.scrollTo({ top: t === 1 ? stops()[index] : from + distance * eased, behavior: 'instant' });
         if (t < 1) frame = requestAnimationFrame(step);
