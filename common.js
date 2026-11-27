@@ -83,12 +83,23 @@ if (typeof document !== 'undefined') {
   });
 
   // Кнопки «Оставить заявку» и «Хочу такую» ведут к форме, помечают источник и подставляют машину.
+  // Подставленное поле коротко подсвечиваем, когда прокрутка доехала, — иначе клиент не заметит.
+  const flashOnArrival = (input) => {
+    const flash = () => {
+      input.classList.add('is-autofilled');
+      setTimeout(() => input.classList.remove('is-autofilled'), 1600);
+    };
+    document.addEventListener('lead:arrived', flash, { once: true });
+  };
   document.querySelectorAll('[data-lead-source]').forEach((link) => {
     link.addEventListener('click', () => {
       const form = document.querySelector('form[data-lead]');
       if (!form) return;
       if (form.elements.source) form.elements.source.value = link.dataset.leadSource;
-      if (link.dataset.leadCar && form.elements.car) form.elements.car.value = link.dataset.leadCar;
+      if (link.dataset.leadCar && form.elements.car) {
+        form.elements.car.value = link.dataset.leadCar;
+        flashOnArrival(form.elements.car);
+      }
       form.elements.name.focus({ preventScroll: true });
     });
   });

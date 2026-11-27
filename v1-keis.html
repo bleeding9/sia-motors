@@ -376,6 +376,13 @@
   .contact__grid { display: grid; gap: 32px; align-items: start; }
   .contact__copy > p { margin-top: 16px; color: var(--cream-dim); max-width: 46ch; }
   .sheet .field input { border-color: rgba(45, 44, 42, 0.45); background: var(--cream-light); }
+  /* Поле, заполненное за клиента: короткая бронзовая вспышка, иначе подстановку никто не заметит */
+  .lead input.is-autofilled { animation: autofill 1.5s var(--ease); }
+  @keyframes autofill {
+    0% { background-color: var(--cream-light); box-shadow: 0 0 0 0 rgba(174, 132, 73, 0); }
+    18% { background-color: #f8eedb; box-shadow: 0 0 0 3px rgba(174, 132, 73, 0.5); }
+    100% { background-color: var(--cream-light); box-shadow: 0 0 0 3px rgba(174, 132, 73, 0); }
+  }
   .sheet .field__err { color: var(--error-deep); }
   .sheet .lead__status { padding: 12px 14px; border-radius: 10px; background: var(--cream-deep); }
   .sheet .tag { justify-self: start; }
@@ -426,6 +433,8 @@
     .line::after { animation: none; opacity: 1; }
     .stop:nth-child(2)::before, .stop:nth-child(2)::after, .stop:last-child::before, .stop:last-child::after, .stop:last-child .stamp { animation: none; }
     .tag:hover { animation: none; }
+    /* подстановку в поле показываем кольцом без вспышки: движение отключено, цвет остаётся */
+    .lead input.is-autofilled { animation: none; box-shadow: 0 0 0 3px rgba(174, 132, 73, 0.55); }
     /* страны всё так же сменяются сами, но без движения — мягкой сменой прозрачности */
     .hero__word .ch { transform: none !important; opacity: 1 !important; filter: none !important; transition: none !important; }
     .hero__word { transition: opacity 0.8s ease !important; }
@@ -838,6 +847,8 @@
     const follow = (link, target) => {
       if (location.hash !== link.hash) history.pushState(null, '', link.hash);
       glide(() => topOf(target), () => {
+        // Форма слушает это событие: подсветить поле, которое заполнилось за клиента.
+        target.dispatchEvent(new CustomEvent('lead:arrived', { bubbles: true }));
         // Поле формы уже получило фокус (кнопки «Оставить заявку») — его не перебиваем.
         if (target.contains(document.activeElement)) return update();
         target.tabIndex = -1;
